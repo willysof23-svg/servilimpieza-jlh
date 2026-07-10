@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel de administración — ServiLimpieza JLH</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#f0f4ff; color:#1a1a2e; }
+  header { background:#1a2e6e; color:white; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  header h1 { font-size:1.15rem; margin:0; }
+  header button { background:transparent; border:1px solid rgba(255,255,255,0.4); color:white; padding:8px 16px; border-radius:8px; cursor:pointer; }
+  main { max-width:1100px; margin:0 auto; padding:20px; }
+  #gate { max-width:380px; margin:80px auto; background:white; padding:32px; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,0.12); text-align:center; }
+  #gate input { width:100%; padding:12px; border-radius:8px; border:1px solid #ccc; margin:14px 0; font-size:1rem; }
+  #gate button { width:100%; padding:12px; border-radius:8px; border:none; background:#1565c0; color:white; font-weight:700; cursor:pointer; font-size:1rem; }
+  #gate .error { color:#c62828; font-size:0.9rem; min-height:1.2em; }
+  nav.tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+  nav.tabs button { padding:10px 18px; border-radius:50px; border:2px solid #1565c0; background:white; color:#1565c0; font-weight:700; cursor:pointer; }
+  nav.tabs button.active { background:#1565c0; color:white; }
+  section.panel { display:none; background:white; border-radius:16px; padding:20px; box-shadow:0 6px 24px rgba(0,0,0,0.08); }
+  section.panel.active { display:block; }
+  table { width:100%; border-collapse:collapse; font-size:0.9rem; }
+  th, td { text-align:left; padding:8px; border-bottom:1px solid #eee; vertical-align:top; }
+  td input, td textarea { width:100%; padding:6px; border:1px solid #ddd; border-radius:6px; font-size:0.85rem; }
+  td textarea { min-height:44px; resize:vertical; }
+  .row-actions { display:flex; gap:6px; white-space:nowrap; }
+  button.small { padding:6px 12px; border-radius:6px; border:none; cursor:pointer; font-size:0.82rem; font-weight:700; }
+  .btn-save { background:#00c853; color:white; }
+  .btn-delete { background:#e53935; color:white; }
+  .btn-add { background:#1565c0; color:white; margin-top:14px; }
+  .media-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; margin-bottom:24px; }
+  .media-card { border:1px solid #eee; border-radius:12px; overflow:hidden; }
+  .media-card img, .media-card video { width:100%; height:130px; object-fit:cover; display:block; background:#eee; }
+  .media-card .body { padding:10px; }
+  .media-card input, .media-card select { width:100%; margin-bottom:6px; padding:6px; border-radius:6px; border:1px solid #ddd; font-size:0.82rem; }
+  .upload-box { border:2px dashed #1565c0; border-radius:12px; padding:24px; text-align:center; margin-bottom:20px; }
+  .toast { position:fixed; bottom:20px; right:20px; background:#1a2e6e; color:white; padding:12px 20px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.2); display:none; z-index:999; }
+  @media (max-width: 640px) {
+    table, thead, tbody, th, td, tr { display:block; }
+    thead { display:none; }
+    tr { border:1px solid #eee; border-radius:10px; margin-bottom:12px; padding:8px; }
+    td { border:none; padding:6px 4px; }
+    td::before { content: attr(data-label); font-weight:700; font-size:0.75rem; color:#888; display:block; }
+  }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h2>🔒 Panel de administración</h2>
+  <p style="color:#666;font-size:0.9rem;">ServiLimpieza JLH</p>
+  <input id="tokenInput" type="password" placeholder="Clave de administrador">
+  <button id="btnEntrar">Entrar</button>
+  <p class="error" id="gateError"></p>
+</div>
+
+<div id="app" style="display:none;">
+  <header>
+    <h1>🧹 Panel de administración — ServiLimpieza JLH</h1>
+    <button id="btnSalir">Cerrar sesión</button>
+  </header>
+  <main>
+    <nav class="tabs">
+      <button data-tab="Media" class="active">Imágenes / Video / PDF</button>
+      <button data-tab="Servicios">Servicios</button>
+      <button data-tab="Precios">Precios</button>
+      <button data-tab="Ciudades">Ciudades</button>
+      <button data-tab="Testimonios">Testimonios</button>
+      <button data-tab="Config">Configuración</button>
+    </nav>
+
+    <section class="panel active" id="panel-Media">
+      <div class="upload-box">
+        <p><strong>Subir imagen, video o PDF nuevo</strong></p>
+        <input type="text" id="uploadSeccion" placeholder="Sección (ej: hero, servicios, galeria, cobertura)" style="max-width:320px;display:inline-block;margin:6px;padding:8px;border-radius:8px;border:1px solid #ccc;">
+        <input type="text" id="uploadNombre" placeholder="Nombre descriptivo" style="max-width:320px;display:inline-block;margin:6px;padding:8px;border-radius:8px;border:1px solid #ccc;">
+        <br>
+        <input type="file" id="uploadFile" accept="image/*,video/*,application/pdf">
+        <br><br>
+        <button class="small btn-save" id="btnSubir">Subir archivo</button>
+        <p id="uploadStatus" style="color:#666;font-size:0.85rem;"></p>
+      </div>
+      <div class="media-grid" id="mediaGrid"></div>
+    </section>
+
+    <section class="panel" id="panel-Servicios"><div id="tabla-Servicios"></div></section>
+    <section class="panel" id="panel-Precios"><div id="tabla-Precios"></div></section>
+    <section class="panel" id="panel-Ciudades"><div id="tabla-Ciudades"></div></section>
+    <section class="panel" id="panel-Testimonios"><div id="tabla-Testimonios"></div></section>
+    <section class="panel" id="panel-Config"><div id="tabla-Config"></div></section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/**
+ * admin.html — panel de mantenimiento del contenido de ServiLimpieza JLH.
+ *
+ * Habla directamente con el Apps Script Web App (doPost) usando un token
+ * secreto guardado en Script Properties del lado del servidor (nunca en este
+ * archivo). Debe coincidir exactamente con los nombres de columna definidos
+ * en backend/Code.gs (constante HEADERS) — si cambias uno, cambia el otro.
+ */
+
+// Reemplaza esta URL por la que entrega "Desplegar > Nueva implementación"
+// en el Apps Script (ver backend/README.md, paso 7). Debe ser la misma URL
+// que se usa en js/content-loader.js.
+const API_URL = 'https://script.google.com/macros/s/AKfycbyPAvUOwCsF1aV973Cym-ajdHGnuB6t0iFdCG7uOPmRXfk2kb5pZ5krRCrgiUEkVhOfVg/exec';
+
+// Debe reflejar exactamente HEADERS en backend/Code.gs.
+const HEADERS = {
+  Servicios: ['id', 'icon', 'title', 'desc', 'price', 'orden', 'activo'],
+  Precios: ['id', 'icon', 'title', 'desc1', 'desc2', 'price', 'orden', 'activo'],
+  Ciudades: ['id', 'nombre', 'orden', 'activo'],
+  Testimonios: ['id', 'quote', 'author', 'orden', 'activo'],
+  Config: ['key', 'value']
+};
+
+let TOKEN = '';
+let DATA = {}; // último snapshot recibido de list_all
+
+/**
+ * llamarBackend — hace un POST al Apps Script Web App con el token y la
+ * acción pedida. Usa 'text/plain' como content-type para evitar que el
+ * navegador dispare un preflight CORS que Apps Script no responde bien.
+ * Recibe: action (string), extra (objeto con el resto de campos del body).
+ * Retorna: Promise<objeto data> (o lanza un Error si ok:false).
+ * Llamada por: todas las funciones que leen o escriben en la hoja.
+ */
+async function llamarBackend(action, extra) {
+  const body = Object.assign({ token: TOKEN, action }, extra || {});
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(body)
+  });
+  const json = await res.json();
+  if (!json.ok) throw new Error(json.error || 'Error desconocido');
+  return json.data;
+}
+
+/**
+ * mostrarToast — muestra un mensaje breve de confirmación/error en la
+ * esquina de la pantalla. Recibe: mensaje (string), esError (boolean).
+ * Retorna: nada. Llamada por: las acciones de guardar/eliminar/subir.
+ */
+function mostrarToast(mensaje, esError) {
+  const t = document.getElementById('toast');
+  t.textContent = mensaje;
+  t.style.background = esError ? '#c62828' : '#1a2e6e';
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 3500);
+}
+
+/**
+ * entrar — valida el token pidiendo el listado completo al backend; si
+ * responde ok, muestra el panel y carga todas las tablas. Recibe: nada (lee
+ * el input de la clave). Retorna: nada. Llamada por: el botón "Entrar".
+ */
+async function entrar() {
+  TOKEN = document.getElementById('tokenInput').value.trim();
+  document.getElementById('gateError').textContent = '';
+  try {
+    DATA = await llamarBackend('list_all');
+    sessionStorage.setItem('jlh_admin_token', TOKEN);
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    renderTodo();
+  } catch (err) {
+    document.getElementById('gateError').textContent = 'Clave incorrecta o backend no configurado: ' + err.message;
+  }
+}
+
+/**
+ * renderTodo — vuelve a dibujar todas las pestañas (Media + las 5 tablas de
+ * texto) a partir del snapshot actual en DATA. Recibe: nada. Retorna: nada.
+ * Llamada por: entrar(), y después de cada guardar/eliminar/subir exitoso.
+ */
+function renderTodo() {
+  renderMedia();
+  Object.keys(HEADERS).forEach(renderTabla);
+}
+
+/**
+ * renderMedia — dibuja las tarjetas de imágenes/video/pdf con sus campos
+ * editables (sección, nombre, alt, orden, activo) y botones guardar/eliminar.
+ * Recibe: nada (lee DATA.Media). Retorna: nada. Llamada por: renderTodo().
+ */
+function renderMedia() {
+  const grid = document.getElementById('mediaGrid');
+  grid.innerHTML = '';
+  (DATA.Media || []).forEach((item) => {
+    const card = document.createElement('div');
+    card.className = 'media-card';
+    let preview;
+    if (item.tipo === 'video') preview = `<div style="height:130px;display:flex;align-items:center;justify-content:center;background:#1a2e6e;color:white;font-size:1.2rem;">▶ Video</div>`;
+    else if (item.tipo === 'pdf') preview = `<div style="height:130px;display:flex;align-items:center;justify-content:center;background:#e3f2fd;font-size:2rem;">📄</div>`;
+    else preview = `<img src="${item.url}" alt="">`;
+
+    card.innerHTML = `
+      ${preview}
+      <div class="body">
+        <input data-field="seccion" value="${item.seccion || ''}" placeholder="Sección">
+        <input data-field="nombre" value="${item.nombre || ''}" placeholder="Nombre">
+        <input data-field="alt_text" value="${item.alt_text || ''}" placeholder="Texto alternativo">
+        <input data-field="orden" type="number" value="${item.orden || 0}" placeholder="Orden">
+        <label style="font-size:0.8rem;"><input data-field="activo" type="checkbox" ${item.activo === true || item.activo === 'TRUE' ? 'checked' : ''}> Activo</label>
+        <div class="row-actions">
+          <button class="small btn-save">Guardar</button>
+          <button class="small btn-delete">Eliminar</button>
+        </div>
+      </div>
+    `;
+    card.querySelector('.btn-save').onclick = () => guardarMedia(item.id, card);
+    card.querySelector('.btn-delete').onclick = () => eliminarFila('Media', item.id);
+    grid.appendChild(card);
+  });
+}
+
+/**
+ * guardarMedia — lee los campos editados de una tarjeta de medios y los
+ * envía como upsert al backend. Recibe: id (string), card (el elemento DOM
+ * de la tarjeta). Retorna: nada (async). Llamada por: el botón "Guardar" de
+ * cada tarjeta en renderMedia().
+ */
+async function guardarMedia(id, card) {
+  const row = { id };
+  card.querySelectorAll('[data-field]').forEach((el) => {
+    row[el.dataset.field] = el.type === 'checkbox' ? el.checked : el.value;
+  });
+  try {
+    await llamarBackend('upsert', { sheet: 'Media', row });
+    mostrarToast('Guardado.');
+    DATA = await llamarBackend('list_all');
+    renderMedia();
+  } catch (err) {
+    mostrarToast('Error: ' + err.message, true);
+  }
+}
+
+/**
+ * eliminarFila — borra una fila (de cualquier hoja) por su id, previa
+ * confirmación del usuario, y vuelve a cargar los datos. Recibe: sheet
+ * (string), id (string). Retorna: nada (async). Llamada por: los botones
+ * "Eliminar" de renderMedia() y renderTabla().
+ */
+async function eliminarFila(sheet, id) {
+  if (!confirm('¿Eliminar este elemento? Esta acción no se puede deshacer.')) return;
+  try {
+    await llamarBackend('delete', { sheet, id });
+    mostrarToast('Eliminado.');
+    DATA = await llamarBackend('list_all');
+    renderTodo();
+  } catch (err) {
+    mostrarToast('Error: ' + err.message, true);
+  }
+}
+
+/**
+ * renderTabla — dibuja una tabla editable genérica para una hoja de texto
+ * (Servicios, Precios, Ciudades, Testimonios, Config), a partir de las
+ * columnas definidas en HEADERS. Incluye un botón para agregar fila nueva.
+ * Recibe: sheetName (string). Retorna: nada. Llamada por: renderTodo().
+ */
+function renderTabla(sheetName) {
+  const cols = HEADERS[sheetName];
+  const rows = DATA[sheetName] || [];
+  const idCol = sheetName === 'Config' ? 'key' : 'id';
+  const cont = document.getElementById('tabla-' + sheetName);
+
+  let html = '<table><thead><tr>';
+  cols.forEach((c) => { if (c !== 'id') html += `<th>${c}</th>`; });
+  html += '<th></th></tr></thead><tbody>';
+
+  rows.forEach((row) => {
+    html += `<tr data-id="${row[idCol]}">`;
+    cols.forEach((c) => {
+      if (c === 'id') return;
+      if (c === 'activo') {
+        html += `<td data-label="activo"><input data-field="activo" type="checkbox" ${row.activo === true || row.activo === 'TRUE' ? 'checked' : ''}></td>`;
+      } else if (c === 'desc' || c === 'quote') {
+        html += `<td data-label="${c}"><textarea data-field="${c}">${row[c] || ''}</textarea></td>`;
+      } else {
+        html += `<td data-label="${c}"><input data-field="${c}" value="${(row[c] ?? '').toString().replace(/"/g, '&quot;')}"></td>`;
+      }
+    });
+    html += `<td class="row-actions"><button class="small btn-save">Guardar</button><button class="small btn-delete">Eliminar</button></td></tr>`;
+  });
+  html += '</tbody></table><button class="small btn-add">+ Agregar fila</button>';
+  cont.innerHTML = html;
+
+  cont.querySelectorAll('tbody tr').forEach((tr, i) => {
+    const id = tr.dataset.id;
+    tr.querySelector('.btn-save').onclick = () => guardarFilaTexto(sheetName, idCol, id, tr);
+    tr.querySelector('.btn-delete').onclick = () => eliminarFila(sheetName, id);
+  });
+  cont.querySelector('.btn-add').onclick = () => agregarFilaVacia(sheetName, cols);
+}
+
+/**
+ * guardarFilaTexto — recolecta los valores editados de una fila de tabla
+ * genérica y los guarda con upsert. Recibe: sheetName (string), idCol
+ * (string, "id" o "key"), id (string), tr (fila <tr> del DOM). Retorna: nada
+ * (async). Llamada por: el botón "Guardar" de cada fila en renderTabla().
+ */
+async function guardarFilaTexto(sheetName, idCol, id, tr) {
+  const row = { [idCol]: id };
+  tr.querySelectorAll('[data-field]').forEach((el) => {
+    row[el.dataset.field] = el.type === 'checkbox' ? el.checked : el.value;
+  });
+  try {
+    await llamarBackend('upsert', { sheet: sheetName, row });
+    mostrarToast('Guardado.');
+    DATA = await llamarBackend('list_all');
+    renderTabla(sheetName);
+  } catch (err) {
+    mostrarToast('Error: ' + err.message, true);
+  }
+}
+
+/**
+ * agregarFilaVacia — crea una fila nueva vacía (activo=true por defecto) para
+ * que el usuario la complete y guarde. Recibe: sheetName (string), cols
+ * (Array<string>). Retorna: nada. Llamada por: el botón "+ Agregar fila".
+ */
+function agregarFilaVacia(sheetName, cols) {
+  const row = {};
+  cols.forEach((c) => { row[c] = c === 'activo' ? true : ''; });
+  if (!DATA[sheetName]) DATA[sheetName] = [];
+  DATA[sheetName].push(row);
+  renderTabla(sheetName);
+}
+
+/**
+ * subirArchivo — lee el archivo elegido en el input de subida como base64 y
+ * lo envía al backend (acción upload_file), que lo guarda en Drive y crea la
+ * fila en Media. Recibe: nada (lee los inputs del formulario de subida).
+ * Retorna: nada (async). Llamada por: el botón "Subir archivo".
+ */
+async function subirArchivo() {
+  const fileInput = document.getElementById('uploadFile');
+  const seccion = document.getElementById('uploadSeccion').value.trim();
+  const nombre = document.getElementById('uploadNombre').value.trim();
+  const status = document.getElementById('uploadStatus');
+  const file = fileInput.files[0];
+  if (!file || !seccion) {
+    status.textContent = 'Elige un archivo y escribe la sección.';
+    return;
+  }
+  status.textContent = 'Subiendo...';
+  try {
+    const base64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+    await llamarBackend('upload_file', {
+      fileData: base64,
+      fileName: file.name,
+      mimeType: file.type,
+      seccion,
+      nombre,
+      alt_text: nombre
+    });
+    status.textContent = '¡Listo! Archivo subido.';
+    fileInput.value = '';
+    document.getElementById('uploadNombre').value = '';
+    DATA = await llamarBackend('list_all');
+    renderMedia();
+  } catch (err) {
+    status.textContent = 'Error: ' + err.message;
+  }
+}
+
+// --- Conexión de eventos de la interfaz ---
+document.getElementById('btnEntrar').onclick = entrar;
+document.getElementById('tokenInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') entrar(); });
+document.getElementById('btnSubir').onclick = subirArchivo;
+document.getElementById('btnSalir').onclick = () => {
+  sessionStorage.removeItem('jlh_admin_token');
+  location.reload();
+};
+document.querySelectorAll('nav.tabs button').forEach((btn) => {
+  btn.onclick = () => {
+    document.querySelectorAll('nav.tabs button').forEach((b) => b.classList.remove('active'));
+    document.querySelectorAll('section.panel').forEach((p) => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  };
+});
+
+// Si ya había una sesión abierta en esta pestaña, no pedir la clave de nuevo.
+const tokenGuardado = sessionStorage.getItem('jlh_admin_token');
+if (tokenGuardado) {
+  document.getElementById('tokenInput').value = tokenGuardado;
+  entrar();
+}
+</script>
+</body>
+</html>

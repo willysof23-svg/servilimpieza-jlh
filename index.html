@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  // Sirve React/ReactDOM desde los archivos locales en vez de bajarlos de unpkg.com,
+  // igual que hacía el bundle original. dc-runtime.js busca estas claves (las URLs
+  // exactas de CDN que usaría) en window.__resources antes de ir a la red.
+  window.__resources = {
+    "https://unpkg.com/react@18.3.1/umd/react.production.min.js": "js/vendor/react.production.min.js",
+    "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js": "js/vendor/react-dom.production.min.js"
+  };
+</script>
+<script src="js/dc-runtime.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servi Limpieza JLH – Higiene del Hogar | Bogotá</title>
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/8dee3034-c268-4987-b1bf-f9b2b3763c8b.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/97e661fe-052d-452b-b9c0-f3783448dcbd.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/841ea093-b487-4564-9ebf-c63177fb584f.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/edb50af3-e8b2-4fb5-a096-9e2272846ba9.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/4872d49c-0381-4c9a-9767-24d66a4478e4.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/8dee3034-c268-4987-b1bf-f9b2b3763c8b.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/97e661fe-052d-452b-b9c0-f3783448dcbd.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/841ea093-b487-4564-9ebf-c63177fb584f.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/edb50af3-e8b2-4fb5-a096-9e2272846ba9.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/4872d49c-0381-4c9a-9767-24d66a4478e4.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/8dee3034-c268-4987-b1bf-f9b2b3763c8b.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/97e661fe-052d-452b-b9c0-f3783448dcbd.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/841ea093-b487-4564-9ebf-c63177fb584f.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/edb50af3-e8b2-4fb5-a096-9e2272846ba9.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/4872d49c-0381-4c9a-9767-24d66a4478e4.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/8dee3034-c268-4987-b1bf-f9b2b3763c8b.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/97e661fe-052d-452b-b9c0-f3783448dcbd.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/841ea093-b487-4564-9ebf-c63177fb584f.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/edb50af3-e8b2-4fb5-a096-9e2272846ba9.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/fonts/4872d49c-0381-4c9a-9767-24d66a4478e4.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("assets/fonts/8dee3034-c268-4987-b1bf-f9b2b3763c8b.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("assets/fonts/97e661fe-052d-452b-b9c0-f3783448dcbd.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("assets/fonts/841ea093-b487-4564-9ebf-c63177fb584f.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("assets/fonts/edb50af3-e8b2-4fb5-a096-9e2272846ba9.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("assets/fonts/4872d49c-0381-4c9a-9767-24d66a4478e4.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/6ce55c8c-059e-42b3-8029-a4196afba721.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/5e5bcb82-241d-4a23-b7b9-3bbf30fd72ee.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/0ae092f9-5d5b-4ebe-96f0-0aaf77636283.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/685df047-41db-40e1-b929-c7b9ba75cd13.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/a6d0124f-072d-4bf6-b8a4-860af9c47a00.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/6ce55c8c-059e-42b3-8029-a4196afba721.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/5e5bcb82-241d-4a23-b7b9-3bbf30fd72ee.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/0ae092f9-5d5b-4ebe-96f0-0aaf77636283.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/685df047-41db-40e1-b929-c7b9ba75cd13.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/a6d0124f-072d-4bf6-b8a4-860af9c47a00.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/6ce55c8c-059e-42b3-8029-a4196afba721.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/5e5bcb82-241d-4a23-b7b9-3bbf30fd72ee.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/0ae092f9-5d5b-4ebe-96f0-0aaf77636283.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/685df047-41db-40e1-b929-c7b9ba75cd13.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/a6d0124f-072d-4bf6-b8a4-860af9c47a00.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+
+<style>
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; font-family:'Nunito',sans-serif; background:#ffffff; color:#1a1a2e; overflow-x:hidden; }
+  a { color:#1565c0; }
+  a:hover { color:#00c853; }
+  @keyframes flotar { 0% { transform:translateY(110vh) scale(0); opacity:0; } 10% { opacity:1; } 90% { opacity:0.45; } 100% { transform:translateY(-120px) scale(1); opacity:0; } }
+  @keyframes auroraShift { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+  @keyframes pulseGlow { 0%,100% { box-shadow:0 8px 24px rgba(37,211,102,0.5); } 50% { box-shadow:0 8px 40px rgba(37,211,102,0.85),0 0 0 14px rgba(37,211,102,0.14); } }
+  @keyframes fd { from { opacity:0; transform:translateY(-24px) scale(0.9); } to { opacity:1; transform:translateY(0) scale(1); } }
+  @keyframes fu { from { opacity:0; transform:translateY(34px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes shimmerSweep { 0% { transform:translateX(-120%) skewX(-15deg); } 100% { transform:translateX(220%) skewX(-15deg); } }
+  @keyframes marqueeScroll { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+  @keyframes blobMove { 0%,100% { transform:translate(0,0) scale(1); } 33% { transform:translate(4%,6%) scale(1.08); } 66% { transform:translate(-3%,-4%) scale(0.95); } }
+  @keyframes infinitySpin { 0%,100% { transform:scale(1) rotate(0deg); } 50% { transform:scale(1.15) rotate(6deg); } }
+  @keyframes ticker { 0% { background-position:0 0; } 100% { background-position:56px 0; } }
+  /* Micro-interacciones reales con :hover de CSS. El motor de plantillas del
+     sitio (dc-runtime.js) elimina cualquier atributo style-hover="..." antes
+     de pintar el DOM, así que los efectos de hover deben ir aquí como CSS de
+     verdad, no como atributos inline. */
+  .nav-link { transition:color 0.25s; }
+  .nav-link:hover { color:#00e676 !important; }
+  .btn-whatsapp { transition:transform 0.2s,box-shadow 0.2s; }
+  .btn-whatsapp:hover { transform:translateY(-4px) scale(1.02); box-shadow:0 16px 38px rgba(37,211,102,0.6); }
+  .btn-outline:hover { background:rgba(255,255,255,0.12); border-color:white; transform:translateY(-2px); }
+  .svc-card:hover { transform:translateY(-8px); box-shadow:0 28px 60px rgba(21,101,192,0.26); }
+  .svc-icon { transition:transform 0.35s,box-shadow 0.35s; }
+  .svc-card:hover .svc-icon { transform:scale(1.12) rotate(-6deg); box-shadow:0 12px 26px rgba(21,101,192,0.24); }
+  .price-card { transition:transform 0.3s,background 0.3s; }
+  .price-card:hover { transform:translateY(-8px); background:rgba(255,255,255,0.15); }
+  .price-icon { transition:transform 0.35s; }
+  .price-card:hover .price-icon { transform:scale(1.12) rotate(6deg); }
+  .city-pill { transition:transform 0.25s; }
+  .city-pill:hover { transform:translateY(-3px) scale(1.05); }
+  .testimonial-card { transition:transform 0.25s; }
+  .testimonial-card:hover { transform:translateY(-6px); }
+  #backToTop { position:fixed; bottom:26px; left:26px; z-index:9999; width:50px; height:50px; border-radius:50%; background:rgba(26,46,110,0.9); border:2px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,0.3); opacity:0; pointer-events:none; transform:translateY(12px); transition:opacity 0.3s,transform 0.3s,background 0.25s; }
+  #backToTop.visible { opacity:1; pointer-events:auto; transform:translateY(0); }
+  #backToTop:hover { background:#1565c0; }
+  @media (max-width:640px) { #backToTop { bottom:76px; left:16px; width:44px; height:44px; } }
+  .sticky-cta-mobile { display:none; }
+  @media (max-width:640px) {
+    .fab-whatsapp { display:none !important; }
+    .sticky-cta-mobile { display:flex; }
+    body { padding-bottom:58px; } /* deja espacio para que la barra fija no tape el pie de página */
+    .promo-banner { margin-top:172px !important; } /* en móvil el menú ocupa varias filas y es más alto */
+  }
+  @keyframes heroCrossfade { 0% { opacity:0; } 8% { opacity:1; } 33% { opacity:1; } 41% { opacity:0; } 100% { opacity:0; } }
+  .hero-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; animation:heroCrossfade 18s ease-in-out infinite; }
+</style>
+</helmet>
+
+<div ref="{{ setRootRef }}" style="position:relative;">
+
+  <div style="position:fixed;top:0;left:0;right:0;height:3px;z-index:1100;background:linear-gradient(90deg,#29b6f6,#00e676);width:0%;transform-origin:left;" id="scrollProgress"></div>
+
+  <nav id="mainNav" style="position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(26,46,110,0.85);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:10px 6%;box-shadow:0 2px 24px rgba(0,0,0,0.25);flex-wrap:wrap;gap:10px;transition:padding 0.3s,background 0.3s;">
+    <img src="{{ logoUrl }}" alt="Servi Limpieza JLH" style="height:56px;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.35));">
+    <div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap;">
+      <a href="#servicios" class="nav-link" style="color:#cfe8ff;text-decoration:none;font-weight:700;font-size:0.9rem;position:relative;">Servicios</a>
+      <a href="#resultados" class="nav-link" style="color:#cfe8ff;text-decoration:none;font-weight:700;font-size:0.9rem;">Resultados</a>
+      <a href="#galeria-jlh" class="nav-link" style="color:#cfe8ff;text-decoration:none;font-weight:700;font-size:0.9rem;">Galería</a>
+      <a href="#precios" class="nav-link" style="color:#cfe8ff;text-decoration:none;font-weight:700;font-size:0.9rem;">Precios</a>
+      <a href="#cobertura" class="nav-link" style="color:#cfe8ff;text-decoration:none;font-weight:700;font-size:0.9rem;">Cobertura</a>
+      <a href="https://wa.me/{{ waNumero }}?text=Hola,%20quiero%20cotizar" target="_blank" class="btn-whatsapp" style="background:linear-gradient(135deg,#25d366,#128c7e);color:white;text-decoration:none;padding:10px 20px;border-radius:50px;font-weight:800;font-size:0.88rem;box-shadow:0 4px 18px rgba(37,211,102,0.45);display:inline-flex;align-items:center;gap:6px;">📱 WhatsApp</a>
+    </div>
+  </nav>
+
+  <div class="promo-banner" style="overflow:hidden;background:linear-gradient(135deg,#1F3EFF,#2D6CFF);padding:14px 0;margin-top:126px;white-space:nowrap;">
+    <div style="display:inline-flex;animation:marqueeScroll 42s linear infinite;">
+      <sc-for list="{{ marqueeItems }}" as="txt" hint-placeholder-count="8">
+        <span style="font-family:'Montserrat',sans-serif;font-size:0.98rem;font-weight:800;color:white;padding:0 40px;flex-shrink:0;">🎁 {{ txt }}</span>
+      </sc-for>
+      <sc-for list="{{ marqueeItems }}" as="txt2" hint-placeholder-count="8">
+        <span style="font-family:'Montserrat',sans-serif;font-size:0.98rem;font-weight:800;color:white;padding:0 40px;flex-shrink:0;" aria-hidden="true">🎁 {{ txt2 }}</span>
+      </sc-for>
+    </div>
+  </div>
+
+  <section id="heroSection" style="min-height:92vh;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 6%;overflow:hidden;background:linear-gradient(135deg,#0d1b5e 0%,#1565c0 50%,#0288d1 100%);">
+
+    <img class="hero-slide" src="{{ hero1Url }}" alt="" style="animation-delay:0s;">
+    <img class="hero-slide" src="{{ hero2Url }}" alt="" style="animation-delay:-6s;">
+    <img class="hero-slide" src="{{ hero3Url }}" alt="" style="animation-delay:-12s;">
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,27,94,0.74),rgba(21,101,192,0.7) 50%,rgba(2,136,209,0.64) 100%);z-index:0;"></div>
+
+    <sc-if value="{{ heroAurora }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;inset:-20%;background:linear-gradient(120deg,#0d1b5e,#1565c0,#29b6f6,#00c853,#1565c0);background-size:300% 300%;animation:auroraShift 16s ease infinite;opacity:0.55;pointer-events:none;"></div>
+    </sc-if>
+
+    <div style="position:absolute;inset:0;background:url(data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E);pointer-events:none;"></div>
+
+    <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;" id="bubblesLayer">
+      <sc-for list="{{ bubbles }}" as="b" hint-placeholder-count="16">
+        <div style="position:absolute;border-radius:50%;background:rgba(255,255,255,0.07);animation-name:flotar;animation-timing-function:linear;animation-iteration-count:infinite;width:{{ b.size }}px;height:{{ b.size }}px;left:{{ b.left }}%;animation-duration:{{ b.duration }}s;animation-delay:{{ b.delay }}s;"></div>
+      </sc-for>
+    </div>
+
+    <div id="heroSpotlight" style="position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(0,230,118,0.18),rgba(41,182,246,0.08) 45%,transparent 70%);pointer-events:none;transform:translate(-9999px,-9999px);transition:transform 0.08s linear;"></div>
+
+    <img src="{{ logoUrl }}" alt="Servi Limpieza JLH" style="height:150px;display:block;margin-bottom:22px;animation:fd 0.8s ease;position:relative;z-index:2;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.35));">
+
+    <h1 style="position:relative;z-index:2;font-family:'Montserrat',sans-serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:900;color:white;line-height:1.15;margin:0 0 16px;animation:fu 0.9s ease 0.15s both;">Expertos en <em style="font-style:normal;background:linear-gradient(120deg,#00e676,#29b6f6);-webkit-background-clip:text;background-clip:text;color:transparent;">Higiene</em><br>del Hogar a Domicilio</h1>
+    <p style="position:relative;z-index:2;font-size:clamp(0.95rem,2vw,1.2rem);color:#b3d9ff;max-width:600px;line-height:1.7;margin:0 0 36px;animation:fu 0.9s ease 0.3s both;">Renueva tu descanso y bienestar con tecnología de extracción profunda. Eliminación garantizada de olores, manchas y ácaros en colchones, sofás, alfombras y más.</p>
+
+    <div style="position:relative;z-index:2;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fu 0.9s ease 0.45s both;">
+      <a href="https://wa.me/{{ waNumero }}?text=Hola,%20quiero%20cotizar%20un%20servicio" target="_blank" class="btn-whatsapp" style="position:relative;overflow:hidden;background:linear-gradient(135deg,#25d366,#128c7e);color:white;padding:16px 34px;border-radius:50px;font-size:1rem;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 28px rgba(37,211,102,0.45);">
+        <svg viewBox="0 0 24 24" width="22" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.509A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6c-1.96 0-3.788-.535-5.35-1.464l-.384-.228-3.982.949.967-3.876-.252-.399A9.566 9.566 0 012.4 12C2.4 6.699 6.699 2.4 12 2.4S21.6 6.699 21.6 12 17.301 21.6 12 21.6z"></path></svg>
+        Cotizar ahora
+      </a>
+      <a href="#servicios" class="btn-outline" style="background:transparent;color:white;padding:16px 34px;border-radius:50px;font-size:1rem;font-weight:800;text-decoration:none;border:2px solid rgba(255,255,255,0.45);transition:all 0.2s;">Ver servicios ↓</a>
+    </div>
+
+    <div style="position:relative;z-index:2;display:flex;gap:36px;margin-top:56px;flex-wrap:wrap;justify-content:center;animation:fu 0.9s ease 0.6s both;" id="statsRow">
+      <div style="text-align:center;"><div style="font-family:'Montserrat',sans-serif;font-size:2.3rem;font-weight:900;color:#00e676;">{{ statGarantia }}</div><div style="font-size:0.82rem;color:#90caf9;">Garantía total</div></div>
+      <div style="text-align:center;"><div style="font-family:'Montserrat',sans-serif;font-size:2.3rem;font-weight:900;color:#00e676;">{{ statCiudades }}</div><div style="font-size:0.82rem;color:#90caf9;">Ciudades cubiertas</div></div>
+      <div style="text-align:center;"><div style="font-family:'Montserrat',sans-serif;font-size:2.3rem;font-weight:900;color:#00e676;animation:infinitySpin 3s ease-in-out infinite;display:inline-block;">∞</div><div style="font-size:0.82rem;color:#90caf9;">Satisfacción garantizada</div></div>
+    </div>
+  </section>
+
+  <div style="background:white;padding:20px 6%;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 42px;box-shadow:0 6px 24px rgba(21,101,192,0.1);position:relative;z-index:2;" data-reveal="up">
+    <div style="display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.85rem;color:#1a2e6e;"><span style="font-size:1.25rem;">✅</span> Garantía 100% de satisfacción</div>
+    <div style="display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.85rem;color:#1a2e6e;"><span style="font-size:1.25rem;">📍</span> {{ citiesCount }} ciudades cubiertas</div>
+    <div style="display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.85rem;color:#1a2e6e;"><span style="font-size:1.25rem;">💬</span> Respuesta inmediata por WhatsApp</div>
+    <div style="display:flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.85rem;color:#1a2e6e;"><span style="font-size:1.25rem;">🧴</span> Tecnología de extracción profunda</div>
+  </div>
+
+  <section id="servicios" style="padding:96px 6%;background:#f0f4ff;">
+    <div style="text-align:center;margin-bottom:52px;" data-reveal="up">
+      <div style="display:inline-block;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:14px;">LO QUE HACEMOS</div>
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:900;line-height:1.2;color:#1a2e6e;margin:0;">Nuestros <em style="font-style:normal;color:#1565c0;">Servicios</em></h2>
+      <p style="font-size:1rem;color:#546e7a;max-width:560px;margin:10px auto 0;line-height:1.7;">Limpieza profesional a domicilio con tecnología de extracción profunda para todo tu hogar y vehículo.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;" id="svcGrid">
+      <sc-for list="{{ services }}" as="svc" hint-placeholder-count="6">
+        <div class="svc-card" data-reveal="up" style="background:white;border-radius:20px;padding:34px 26px;box-shadow:0 10px 40px rgba(21,101,192,0.12);transition:transform 0.35s,box-shadow 0.35s;position:relative;overflow:hidden;will-change:transform;">
+          <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#29b6f6,#00e676);"></div>
+          <div class="svc-icon" style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#e3f2fd,#e8f5e9);border:2px solid rgba(41,182,246,0.25);display:flex;align-items:center;justify-content:center;font-size:2.1rem;margin-bottom:18px;box-shadow:0 8px 20px rgba(21,101,192,0.14);">{{ svc.icon }}</div>
+          <h3 style="font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:800;color:#1a2e6e;margin:0 0 8px;">{{ svc.title }}</h3>
+          <p style="font-size:0.88rem;color:#607d8b;line-height:1.6;margin:0;">{{ svc.desc }}</p>
+          <div style="margin-top:16px;font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;color:#1565c0;">{{ svc.price }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="padding:96px 6%;background:linear-gradient(135deg,#0d1b5e,#132a75);position:relative;overflow:hidden;">
+    <div style="text-align:center;margin-bottom:56px;position:relative;z-index:2;" data-reveal="up">
+      <div style="display:inline-block;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:14px;">CÓMO FUNCIONA</div>
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:900;line-height:1.2;color:white;margin:0;">Tan Fácil Como <em style="font-style:normal;color:#00e676;">1, 2, 3</em></h2>
+    </div>
+    <div style="position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:32px;max-width:1100px;margin:0 auto;">
+      <div data-reveal="up" style="text-align:center;padding:0 12px;">
+        <div style="width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,0.08);border:2px solid rgba(0,230,118,0.5);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.8rem;color:#00e676;margin:0 auto 20px;">1</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;color:white;font-size:1.05rem;margin:0 0 10px;">Agendas por WhatsApp</h3>
+        <p style="color:#90caf9;font-size:0.88rem;line-height:1.7;margin:0;">Nos cuentas qué necesitas y te damos una cotización clara, sin sorpresas, en minutos.</p>
+      </div>
+      <div data-reveal="up" style="text-align:center;padding:0 12px;">
+        <div style="width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,0.08);border:2px solid rgba(0,230,118,0.5);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.8rem;color:#00e676;margin:0 auto 20px;">2</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;color:white;font-size:1.05rem;margin:0 0 10px;">Limpiamos a domicilio</h3>
+        <p style="color:#90caf9;font-size:0.88rem;line-height:1.7;margin:0;">Llegamos puntuales con tecnología de extracción profunda, sin dejar tu espacio empapado.</p>
+      </div>
+      <div data-reveal="up" style="text-align:center;padding:0 12px;">
+        <div style="width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,0.08);border:2px solid rgba(0,230,118,0.5);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.8rem;color:#00e676;margin:0 auto 20px;">3</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;color:white;font-size:1.05rem;margin:0 0 10px;">Disfrutas con garantía</h3>
+        <p style="color:#90caf9;font-size:0.88rem;line-height:1.7;margin:0;">Si algo no queda perfecto, volvemos sin costo adicional. Tu satisfacción está garantizada.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:96px 6%;background:white;">
+    <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center;">
+      <div data-reveal="up" style="border-radius:22px;overflow:hidden;box-shadow:0 20px 54px rgba(21,101,192,0.22);position:relative;">
+        <img src="{{ quienesSomosPrincipalUrl }}" alt="Equipo Servi Limpieza JLH quitando una mancha de un sofá" style="width:100%;display:block;object-fit:cover;height:100%;">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,27,94,0) 40%,rgba(13,27,94,0.55) 100%);"></div>
+        <div style="position:absolute;bottom:18px;left:18px;color:white;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;text-shadow:0 2px 8px rgba(0,0,0,0.4);">Nuestro equipo en acción</div>
+      </div>
+      <div data-reveal="up">
+        <div style="display:inline-block;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:14px;">QUIÉNES SOMOS</div>
+        <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:900;line-height:1.2;color:#1a2e6e;margin:0;">Más de 10 Años Cuidando <em style="font-style:normal;color:#1565c0;">Hogares Colombianos</em></h2>
+        <p style="font-size:0.98rem;color:#546e7a;margin:16px 0 0;line-height:1.75;">Desde hace más de una década acompañamos a familias de Bogotá y la sabana a recuperar el bienestar de su hogar. Adaptamos cada protocolo a las condiciones reales de nuestra región — la humedad, la altitud y los textiles que predominan en los hogares colombianos — para resultados que sí duran.</p>
+        <p style="font-size:0.98rem;color:#546e7a;margin:14px 0 0;line-height:1.75;">Somos un equipo propio, uniformado y capacitado — no subcontratamos personal externo. Cada persona que entra a tu casa lo hace con dotación completa y protocolos de seguridad, porque sabemos que abrirle la puerta a un desconocido es un acto de confianza. Crecer generando empleo formal en Colombia es, para nosotros, tan importante como la calidad del servicio.</p>
+        <p style="font-size:0.98rem;color:#546e7a;margin:14px 0 0;line-height:1.75;">Seguimos innovando cada año en técnicas y maquinaria, sin perder lo que nos trajo hasta acá: la honestidad de contarte exactamente qué producto se aplica sobre tus muebles.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px;">
+          <div data-reveal="pop" style="border-radius:14px;overflow:hidden;box-shadow:0 8px 24px rgba(21,101,192,0.15);">
+            <img src="{{ quienesSomos2Url }}" alt="Técnico JLH con años de experiencia limpiando una alfombra" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;">
+          </div>
+          <div data-reveal="pop" style="border-radius:14px;overflow:hidden;box-shadow:0 8px 24px rgba(21,101,192,0.15);">
+            <img src="{{ quienesSomos3Url }}" alt="Equipo JLH uniformado con su carro de insumos" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resultados" style="padding:96px 6%;background:white;">
+    <div style="margin-bottom:48px;" data-reveal="up">
+      <div style="display:inline-block;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:14px;">RESULTADOS REALES</div>
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:900;line-height:1.2;color:#1a2e6e;margin:0;">Antes y <em style="font-style:normal;color:#1565c0;">Después</em></h2>
+      <p style="font-size:1rem;color:#546e7a;max-width:560px;margin:10px auto 0;line-height:1.7;">Fotos reales de nuestros clientes. Arrastra el divisor para ver la transformación.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:36px;">
+      <div data-reveal="up">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:800;color:#1a2e6e;margin:0 0 16px;text-align:center;">🛋️ Sofá en L — Transformación total</h3>
+        <div id="slider1" style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 16px 46px rgba(0,0,0,0.2);user-select:none;cursor:ew-resize;aspect-ratio:4/3;">
+          <img src="{{ slider1AntesUrl }}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1;">
+          <img id="slider1-despues" src="{{ slider1DespuesUrl }}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;z-index:2;clip-path:inset(0 50% 0 0);">
+          <div id="slider1-line" style="position:absolute;top:0;bottom:0;left:50%;width:3px;background:white;z-index:4;transform:translateX(-50%);box-shadow:0 0 8px rgba(0,0,0,0.3);"></div>
+          <div id="slider1-handle" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:white;z-index:5;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-size:1rem;font-weight:700;color:#1565c0;pointer-events:none;">↔</div>
+          <div style="position:absolute;bottom:12px;left:12px;z-index:6;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;color:white;background:rgba(211,47,47,0.85);">Antes</div>
+          <div style="position:absolute;bottom:12px;right:12px;z-index:6;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;color:white;background:rgba(0,150,74,0.85);">Después</div>
+        </div>
+      </div>
+      <div data-reveal="up">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:800;color:#1a2e6e;margin:0 0 16px;text-align:center;">🪑 Sillas de comedor — Blancas de nuevo</h3>
+        <div id="slider2" style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 16px 46px rgba(0,0,0,0.2);user-select:none;cursor:ew-resize;aspect-ratio:4/3;">
+          <img src="{{ slider2AntesUrl }}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1;">
+          <img id="slider2-despues" src="{{ slider2DespuesUrl }}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;z-index:2;clip-path:inset(0 50% 0 0);">
+          <div id="slider2-line" style="position:absolute;top:0;bottom:0;left:50%;width:3px;background:white;z-index:4;transform:translateX(-50%);box-shadow:0 0 8px rgba(0,0,0,0.3);"></div>
+          <div id="slider2-handle" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:white;z-index:5;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-size:1rem;font-weight:700;color:#1565c0;pointer-events:none;">↔</div>
+          <div style="position:absolute;bottom:12px;left:12px;z-index:6;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;color:white;background:rgba(211,47,47,0.85);">Antes</div>
+          <div style="position:absolute;bottom:12px;right:12px;z-index:6;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;color:white;background:rgba(0,150,74,0.85);">Después</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="precios" style="padding:96px 6%;background:linear-gradient(135deg,#0d1b5e,#1565c0);position:relative;overflow:hidden;">
+    <div data-reveal="up" style="position:relative;z-index:2;">
+      <div style="display:inline-block;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:14px;">PRECIOS TRANSPARENTES</div>
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:900;line-height:1.2;color:white;margin:0;">Referencia de <em style="font-style:normal;color:#00e676;">Precios (COP)</em></h2>
+      <p style="font-size:1rem;color:#90caf9;max-width:560px;margin:10px auto 0;line-height:1.7;">Sin sorpresas. Cotización exacta antes de iniciar el trabajo.</p>
+    </div>
+    <div style="position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:48px;">
+      <sc-for list="{{ pricing }}" as="p" hint-placeholder-count="3">
+        <div class="price-card" data-reveal="up" style="position:relative;overflow:hidden;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);backdrop-filter:blur(10px);border-radius:20px;padding:34px 26px;text-align:center;">
+          <div class="price-icon" style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.12);border:2px solid rgba(0,230,118,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">{{ p.icon }}</div>
+          <h3 style="font-family:'Montserrat',sans-serif;color:white;font-size:1.1rem;font-weight:800;margin:0 0 8px;">{{ p.title }}</h3>
+          <div style="font-size:0.83rem;color:#90caf9;margin-bottom:18px;line-height:1.5;">{{ p.desc1 }}<br>{{ p.desc2 }}</div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:1.45rem;font-weight:900;color:#00e676;">{{ p.price }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="position:relative;z-index:2;text-align:center;margin-top:38px;" data-reveal="up">
+      <a href="https://wa.me/{{ waNumero }}?text=Hola,%20quiero%20una%20cotización" target="_blank" class="btn-whatsapp" style="background:linear-gradient(135deg,#25d366,#128c7e);color:white;padding:16px 34px;border-radius:50px;font-size:1rem;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 28px rgba(37,211,102,0.45);">
+        <svg viewBox="0 0 24 24" width="22" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.509A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6c-1.96 0-3.788-.535-5.35-1.464l-.384-.228-3.982.949.967-3.876-.252-.399A9.566 9.566 0 012.4 12C2.4 6.699 6.699 2.4 12 2.4S21.6 6.699 21.6 12 17.301 21.6 12 21.6z"></path></svg>
+        Pedir cotización gratis
+      </a>
+    </div>
+  </section>
+
+  <section id="cobertura" style="padding:96px 6%;background:#f0f4ff;">
+    <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;">
+      <div data-reveal="up">
+        <div style="display:inline-block;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:14px;">DÓNDE LLEGAMOS</div>
+        <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:900;line-height:1.2;color:#1a2e6e;margin:0;">Amplia Cobertura <em style="font-style:normal;color:#1565c0;">Regional</em></h2>
+        <p style="font-size:1rem;color:#546e7a;max-width:560px;margin:10px 0 0;line-height:1.7;">Servicio a domicilio en toda el área metropolitana de Bogotá y municipios vecinos.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;">
+          <sc-for list="{{ cities }}" as="city" hint-placeholder-count="6">
+            <div class="city-pill" data-reveal="pop" style="background:white;border:2px solid #29b6f6;color:#1565c0;padding:7px 18px;border-radius:50px;font-weight:700;font-size:0.88rem;display:flex;align-items:center;gap:5px;box-shadow:0 4px 12px rgba(21,101,192,0.12);">📍 {{ city }}</div>
+          </sc-for>
+        </div>
+        <a href="https://wa.me/{{ waNumero }}?text=Hola,%20quiero%20verificar%20cobertura" target="_blank" class="btn-whatsapp" style="margin-top:24px;background:linear-gradient(135deg,#25d366,#128c7e);color:white;padding:16px 34px;border-radius:50px;font-size:1rem;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 10px 28px rgba(37,211,102,0.45);">
+          <svg viewBox="0 0 24 24" width="22" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.509A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6c-1.96 0-3.788-.535-5.35-1.464l-.384-.228-3.982.949.967-3.876-.252-.399A9.566 9.566 0 012.4 12C2.4 6.699 6.699 2.4 12 2.4S21.6 6.699 21.6 12 17.301 21.6 12 21.6z"></path></svg>
+          Verificar mi zona
+        </a>
+      </div>
+      <div data-reveal="up" style="border-radius:22px;overflow:hidden;box-shadow:0 20px 54px rgba(21,101,192,0.22);position:relative;">
+        <img src="{{ coberturaUrl }}" style="width:100%;display:block;object-fit:cover;height:100%;">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,27,94,0) 40%,rgba(13,27,94,0.55) 100%);"></div>
+        <div style="position:absolute;bottom:18px;left:18px;color:white;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;text-shadow:0 2px 8px rgba(0,0,0,0.4);">Bogotá y área metropolitana</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:96px 6%;background:#f0f4ff;">
+    <div style="text-align:center;margin-bottom:52px;" data-reveal="up">
+      <div style="display:inline-block;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:14px;">NUESTRO COMPROMISO</div>
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:900;line-height:1.2;color:#1a2e6e;margin:0;">Calidad, Seguridad y <em style="font-style:normal;color:#1565c0;">Sostenibilidad</em></h2>
+      <p style="font-size:1rem;color:#546e7a;max-width:640px;margin:10px auto 0;line-height:1.7;">Tres pilares que no negociamos, porque tu hogar y tu familia se lo merecen.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;max-width:1200px;margin:0 auto;">
+      <div class="testimonial-card" data-reveal="up" style="background:white;border-radius:20px;overflow:hidden;box-shadow:0 10px 40px rgba(21,101,192,0.12);">
+        <img src="{{ compromiso1Url }}" alt="Certificado de sanitización y dotación de seguridad JLH" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;">
+        <div style="padding:24px;">
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;color:#1a2e6e;font-size:1.02rem;margin:0 0 8px;">Tecnología y Trazabilidad</h3>
+          <p style="font-size:0.88rem;color:#607d8b;line-height:1.65;margin:0;">Maquinaria de última generación y protocolos certificados de sanitización. Sabrás exactamente qué producto se aplica sobre cada mueble — sin letra chiquita.</p>
+        </div>
+      </div>
+      <div class="testimonial-card" data-reveal="up" style="background:white;border-radius:20px;overflow:hidden;box-shadow:0 10px 40px rgba(21,101,192,0.12);">
+        <img src="{{ compromiso2Url }}" alt="Línea de productos biodegradables Servi Limpieza JLH" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;">
+        <div style="padding:24px;">
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;color:#1a2e6e;font-size:1.02rem;margin:0 0 8px;">Filosofía Eco-Friendly</h3>
+          <p style="font-size:0.88rem;color:#607d8b;line-height:1.65;margin:0;">Productos biodegradables, libres de fosfatos y de bajo consumo de agua. Cuidamos tu hogar hoy y el planeta que dejamos mañana.</p>
+        </div>
+      </div>
+      <div class="testimonial-card" data-reveal="up" style="background:white;border-radius:20px;overflow:hidden;box-shadow:0 10px 40px rgba(21,101,192,0.12);">
+        <img src="{{ compromiso3Url }}" alt="Cuidado del hogar y bienestar familiar JLH" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;">
+        <div style="padding:24px;">
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;color:#1a2e6e;font-size:1.02rem;margin:0 0 8px;">Bienestar Familiar</h3>
+          <p style="font-size:0.88rem;color:#607d8b;line-height:1.65;margin:0;">No solo quitamos manchas: cuidamos la salud de quienes más quieres. Ideal para hogares con niños, mascotas o personas alérgicas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="text-align:center;padding:82px 6%;background:linear-gradient(135deg,#e8f5e9,#e3f2fd);" data-reveal="up">
+    <div style="width:96px;height:96px;background:linear-gradient(135deg,#00c853,#1565c0);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.6rem;margin:0 auto 24px;box-shadow:0 12px 36px rgba(0,200,83,0.35);animation:infinitySpin 4s ease-in-out infinite;">🛡️</div>
+    <div style="display:inline-block;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:14px;">NUESTRO COMPROMISO</div>
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:900;line-height:1.2;color:#1a2e6e;margin:0;">Garantía de Satisfacción <em style="font-style:normal;color:#1565c0;">Total</em></h2>
+    <p style="color:#546e7a;max-width:520px;margin:14px auto 0;font-size:1rem;line-height:1.7;">Si persisten olores o manchas tras el servicio, programamos visitas de refuerzo sin costo adicional. Tu satisfacción es nuestra prioridad número uno.</p>
+  </section>
+
+  <section style="padding:96px 6%;background:white;">
+    <div style="text-align:center;margin-bottom:48px;" data-reveal="up">
+      <div style="display:inline-block;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:14px;">LO QUE DICEN</div>
+      <h2 style="font-family:'Montserrat',sans-serif;font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:900;line-height:1.2;color:#1a2e6e;margin:0;">Clientes <em style="font-style:normal;color:#1565c0;">Satisfechos</em></h2>
+    </div>
+
+    <sc-if value="{{ testimonialsAutoplay }}" hint-placeholder-val="{{ true }}">
+      <div id="testimonialCarousel" style="max-width:640px;margin:0 auto;text-align:center;position:relative;min-height:200px;touch-action:pan-y;">
+        <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="3">
+          <div style="background:#f0f4ff;border-radius:20px;padding:32px;border-left:4px solid #29b6f6;position:absolute;inset:0;transition:opacity 0.6s ease;opacity:{{ t.opacity }};pointer-events:{{ t.pointerEvents }};">
+            <div style="color:#f9a825;font-size:1.1rem;margin-bottom:12px;">⭐⭐⭐⭐⭐</div>
+            <p style="font-size:1rem;color:#455a64;line-height:1.7;font-style:italic;margin:0;">"{{ t.quote }}"</p>
+            <div style="margin-top:16px;display:flex;align-items:center;gap:10px;">
+              <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.8rem;flex-shrink:0;">{{ t.initials }}</div>
+              <div style="font-weight:700;color:#1a2e6e;font-size:0.9rem;">{{ t.author }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div id="testimonialDots" style="display:flex;justify-content:center;gap:8px;margin-top:224px;">
+        <sc-for list="{{ testimonials }}" as="dot" hint-placeholder-count="3">
+          <div data-idx="{{ dot.idx }}" style="width:9px;height:9px;border-radius:50%;transition:background 0.3s,transform 0.3s;background:{{ dot.dotColor }};cursor:pointer;"></div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ testimonialsAutoplayOff }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px;margin-top:46px;">
+        <sc-for list="{{ testimonials }}" as="t2" hint-placeholder-count="3">
+          <div class="testimonial-card" data-reveal="up" style="background:#f0f4ff;border-radius:20px;padding:26px;border-left:4px solid #29b6f6;">
+            <div style="color:#f9a825;font-size:1.05rem;margin-bottom:12px;">⭐⭐⭐⭐⭐</div>
+            <p style="font-size:0.93rem;color:#455a64;line-height:1.7;font-style:italic;margin:0;">"{{ t2.quote }}"</p>
+            <div style="margin-top:16px;display:flex;align-items:center;gap:10px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#29b6f6,#00e676);color:white;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.78rem;flex-shrink:0;">{{ t2.initials }}</div>
+              <div style="font-weight:700;color:#1a2e6e;font-size:0.88rem;">{{ t2.author }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+  </section>
+
+  <section style="text-align:center;padding:100px 6%;background:linear-gradient(135deg,#00c853,#1565c0);position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-30%;left:-15%;width:500px;height:500px;background:rgba(255,255,255,0.06);border-radius:50%;animation:blobMove 12s ease-in-out infinite;"></div>
+    <div style="position:absolute;bottom:-25%;right:-10%;width:420px;height:420px;background:rgba(255,255,255,0.05);border-radius:50%;animation:blobMove 14s ease-in-out infinite reverse;"></div>
+    <div style="position:relative;z-index:2;" data-reveal="up">
+      <h2 style="color:white;font-size:clamp(1.8rem,4vw,2.9rem);margin:0 0 14px;font-family:'Montserrat',sans-serif;font-weight:900;">¿Listo para renovar tu hogar?</h2>
+      <p style="color:rgba(255,255,255,0.9);font-size:1.05rem;max-width:500px;margin:0 auto 36px;">Agenda hoy mismo. Servicio a domicilio, precios justos y garantía total de satisfacción.</p>
+      <a href="https://wa.me/{{ waNumero }}?text=Hola,%20quiero%20agendar%20un%20servicio" target="_blank" class="btn-whatsapp" style="position:relative;overflow:hidden;background:linear-gradient(135deg,#25d366,#128c7e);color:white;padding:18px 40px;border-radius:50px;font-size:1.1rem;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 12px 34px rgba(0,0,0,0.3);">
+        <svg viewBox="0 0 24 24" width="22" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.509A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6c-1.96 0-3.788-.535-5.35-1.464l-.384-.228-3.982.949.967-3.876-.252-.399A9.566 9.566 0 012.4 12C2.4 6.699 6.699 2.4 12 2.4S21.6 6.699 21.6 12 17.301 21.6 12 21.6z"></path></svg>
+        Escribir al WhatsApp — {{ waNumeroDisplay }}
+      </a>
+    </div>
+  </section>
+
+  <footer style="background:#1a2e6e;color:#90caf9;padding:44px 6%;text-align:center;">
+    <img src="{{ logoUrl }}" alt="Servi Limpieza JLH" style="height:58px;display:block;margin:0 auto 14px;">
+    <p style="font-size:0.83rem;margin:0;">📍 Bogotá, Colombia &nbsp;|&nbsp; 📱 <a href="https://wa.me/{{ waNumero }}" style="color:#00e676;text-decoration:none;">{{ waNumeroDisplay }}</a></p>
+    <p style="margin-top:8px;opacity:0.6;font-size:0.78rem;">© 2026 Servi Limpieza JLH — Todos los derechos reservados</p>
+  </footer>
+
+  <a href="https://wa.me/{{ waNumero }}?text=Hola,%20quiero%20información" target="_blank" class="fab-whatsapp" style="position:fixed;bottom:26px;right:26px;z-index:9999;width:58px;height:58px;background:linear-gradient(135deg,#25d366,#128c7e);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,0.5);text-decoration:none;animation:pulseGlow 2.2s infinite;" title="WhatsApp">
+    <svg viewBox="0 0 24 24" width="28" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.509A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6c-1.96 0-3.788-.535-5.35-1.464l-.384-.228-3.982.949.967-3.876-.252-.399A9.566 9.566 0 012.4 12C2.4 6.699 6.699 2.4 12 2.4S21.6 6.699 21.6 12 17.301 21.6 12 21.6z"></path></svg>
+  </a>
+
+  <a href="https://wa.me/{{ waNumero }}?text=Hola,%20quiero%20cotizar%20un%20servicio" target="_blank" class="sticky-cta-mobile" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#25d366,#128c7e);color:white;text-decoration:none;align-items:center;justify-content:center;gap:8px;padding:14px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.95rem;box-shadow:0 -6px 20px rgba(0,0,0,0.2);">
+    <svg viewBox="0 0 24 24" width="20" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L0 24l6.335-1.509A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6c-1.96 0-3.788-.535-5.35-1.464l-.384-.228-3.982.949.967-3.876-.252-.399A9.566 9.566 0 012.4 12C2.4 6.699 6.699 2.4 12 2.4S21.6 6.699 21.6 12 17.301 21.6 12 21.6z"></path></svg>
+    Cotizar por WhatsApp
+  </a>
+
+  <button id="backToTop" title="Volver arriba" aria-label="Volver arriba">
+    <svg viewBox="0 0 24 24" width="22" fill="white"><path d="M12 5l-7 7h4v7h6v-7h4z"></path></svg>
+  </button>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{
+  &quot;heroEffect&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;aurora&quot;, &quot;options&quot;: [&quot;aurora&quot;, &quot;burbujas&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Efectos&quot; },
+  &quot;cardHover&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;lift&quot;, &quot;options&quot;: [&quot;lift&quot;, &quot;tilt&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Efectos&quot; },
+  &quot;testimonialsAutoplay&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Efectos&quot; }
+}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.bubbles = Array.from({ length: 16 }).map(() => ({
+      size: Math.round(Math.random() * 80 + 20),
+      left: Math.round(Math.random() * 100),
+      duration: +(Math.random() * 12 + 8).toFixed(1),
+      delay: +(Math.random() * 8).toFixed(1)
+    }));
+
+    this.services = [
+      { icon: '🛏️', title: 'Colchones', desc: 'Doble, King o Queen. Full (2 caras) o 1 cara. Eliminamos ácaros, manchas y olores profundos.', price: '$120.000 – $170.000' },
+      { icon: '🛋️', title: 'Tapicería de Muebles', desc: 'Sofás 2-3 puestos, salas en L, poltronas, cabeceros y tapetes. Lavado con vapor y extracción.', price: '$110.000 – $180.000' },
+      { icon: '🪑', title: 'Sillas y Complementos', desc: 'Sillas de comedor, tapetes y alfombras. Recupera el color original y elimina suciedad acumulada.', price: '$70.000 – $250.000' },
+      { icon: '🚗', title: 'Tapicería de Autos', desc: 'Asientos y tapizado interior. Limpieza profunda que devuelve el aspecto original a tu vehículo.', price: 'Consultar precio' },
+      { icon: '🐱', title: 'Camas para Mascotas', desc: 'Camas y gimnasios para gatos. Protocolos especializados para eliminar olores de mascotas.', price: 'Consultar precio' },
+      { icon: '🧹', title: 'Alfombras y Tapetes', desc: 'Desde alfombras pequeñas hasta tapetes grandes. Extracción profunda de polvo, bacterias y manchas.', price: 'Desde $70.000' }
+    ];
+
+    this.pricing = [
+      { icon: '🛏️', title: 'Colchones', desc1: 'Doble, King o Queen', desc2: 'Full (2 caras) o 1 cara', price: '$120.000 – $170.000' },
+      { icon: '🛋️', title: 'Muebles', desc1: 'Sofás 2-3 puestos', desc2: 'Salas en L, poltronas', price: '$110.000 – $180.000' },
+      { icon: '🪑', title: 'Complementos', desc1: 'Sillas de comedor', desc2: 'Tapetes y alfombras', price: '$70.000 – $250.000' }
+    ];
+
+    this.cities = ['Bogotá', 'Chía', 'Soacha', 'Madrid', 'Mosquera', 'Funza'];
+
+    this.testimonialsData = [
+      { quote: 'El sofá quedó como nuevo. Tenía manchas de años que yo creía que nunca saldrían. ¡Excelente servicio y muy puntuales!', author: 'María C., Bogotá' },
+      { quote: 'Lavaron el colchón de mis hijos y eliminaron completamente el olor a pipí de mascota. Los recomiendo 100%. Muy profesionales.', author: 'Carlos R., Soacha' },
+      { quote: 'Las sillas del comedor quedaron impecables. Hice el agendamiento por WhatsApp y llegaron en el horario acordado. Volveré a contratar.', author: 'Sandra M., Chía' }
+    ];
+
+    this.marqueeItems = [
+      'PROMO ESPECIAL: Lavado colchón 1.40 + ¡BASE CAMA GRATIS! — Escríbenos al 311 829 8533',
+      'PROMO ESPECIAL: Lavado colchón 1.40 + ¡BASE CAMA GRATIS! — Escríbenos al 311 829 8533',
+      'PROMO ESPECIAL: Lavado colchón 1.40 + ¡BASE CAMA GRATIS! — Escríbenos al 311 829 8533',
+      'PROMO ESPECIAL: Lavado colchón 1.40 + ¡BASE CAMA GRATIS! — Escríbenos al 311 829 8533'
+    ];
+
+    this.state = {
+      statGarantia: '0%',
+      statCiudades: '0+',
+      testimonialIdx: 0
+    };
+
+    this.setRootRef = (el) => { this.rootEl = el; };
+    this.countersStarted = false;
+    this.testimonialTimer = null;
+  }
+
+  componentDidMount() {
+    const root = this.rootEl;
+    if (!root) return;
+
+    // Vuelve a pintar cuando content-loader.js avisa que ya llegaron los
+    // datos de la hoja (servicios, precios, testimonios, ciudades, config),
+    // reemplazando el contenido de respaldo por el real sin recargar la página.
+    this._onCmsData = () => this.setState({});
+    window.addEventListener('cms:data-ready', this._onCmsData);
+
+    // Scroll progress bar + nav shrink
+    const progressEl = root.querySelector('#scrollProgress');
+    const navEl = root.querySelector('#mainNav');
+    const backToTopEl = root.querySelector('#backToTop');
+    const onScroll = () => {
+      const h = document.documentElement;
+      const scrollTop = h.scrollTop || document.body.scrollTop;
+      const scrollH = h.scrollHeight - h.clientHeight;
+      const pct = scrollH > 0 ? (scrollTop / scrollH) * 100 : 0;
+      if (progressEl) progressEl.style.width = pct + '%';
+      if (navEl) {
+        if (scrollTop > 40) {
+          navEl.style.padding = '6px 6%';
+          navEl.style.background = 'rgba(26,46,110,0.97)';
+        } else {
+          navEl.style.padding = '10px 6%';
+          navEl.style.background = 'rgba(26,46,110,0.85)';
+        }
+      }
+      if (backToTopEl) backToTopEl.classList.toggle('visible', scrollTop > 500);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    this._onScroll = onScroll;
+
+    // Botón "volver arriba": aparece después de bajar 500px y sube la
+    // página con scroll suave (html ya tiene scroll-behavior:smooth).
+    if (backToTopEl) {
+      this._onBackToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+      backToTopEl.addEventListener('click', this._onBackToTop);
+    }
+
+    // Hero cursor spotlight
+    const hero = root.querySelector('#heroSection');
+    const spotlight = root.querySelector('#heroSpotlight');
+    if (hero && spotlight) {
+      const onMove = (e) => {
+        const r = hero.getBoundingClientRect();
+        const x = e.clientX - r.left - 260;
+        const y = e.clientY - r.top - 260;
+        spotlight.style.transform = `translate(${x}px, ${y}px)`;
+      };
+      const onLeave = () => { spotlight.style.transform = 'translate(-9999px,-9999px)'; };
+      hero.addEventListener('mousemove', onMove);
+      hero.addEventListener('mouseleave', onLeave);
+      this._heroMove = { hero, onMove, onLeave };
+    }
+
+    // Before/after sliders
+    const initSlider = (id) => {
+      const wrap = root.querySelector('#' + id);
+      const line = root.querySelector('#' + id + '-line');
+      const handle = root.querySelector('#' + id + '-handle');
+      const imgDespues = root.querySelector('#' + id + '-despues');
+      if (!wrap || !line || !handle || !imgDespues) return;
+      let dragging = false;
+      const setPos = (x) => {
+        const rect = wrap.getBoundingClientRect();
+        let pct = (x - rect.left) / rect.width * 100;
+        pct = Math.max(2, Math.min(98, pct));
+        line.style.left = pct + '%';
+        handle.style.left = pct + '%';
+        imgDespues.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+      };
+      wrap.addEventListener('mousedown', e => { dragging = true; setPos(e.clientX); });
+      wrap.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
+      document.addEventListener('mousemove', e => { if (dragging) setPos(e.clientX); });
+      document.addEventListener('touchmove', e => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+      document.addEventListener('mouseup', () => dragging = false);
+      document.addEventListener('touchend', () => dragging = false);
+      setTimeout(() => {
+        let p = 50, dir = -1;
+        const hint = setInterval(() => {
+          p += dir * 0.8;
+          if (p < 30 || p > 70) dir *= -1;
+          setPos(wrap.getBoundingClientRect().left + wrap.offsetWidth * p / 100);
+        }, 16);
+        setTimeout(() => { clearInterval(hint); setPos(wrap.getBoundingClientRect().left + wrap.offsetWidth * 0.5); }, 2000);
+      }, 800);
+    };
+    initSlider('slider1');
+    initSlider('slider2');
+
+    // Card tilt effect (only when prop set)
+    if ((this.props.cardHover ?? 'lift') === 'tilt') {
+      root.querySelectorAll('.svc-card').forEach(card => {
+        const onMove = (e) => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform = `perspective(700px) rotateY(${px * 14}deg) rotateX(${-py * 14}deg) translateY(-6px)`;
+        };
+        const onLeave = () => { card.style.transform = 'translateY(0)'; };
+        card.addEventListener('mousemove', onMove);
+        card.addEventListener('mouseleave', onLeave);
+      });
+    }
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0) scale(1)';
+        }
+      });
+    }, { threshold: 0.12 });
+    root.querySelectorAll('[data-reveal]').forEach(el => {
+      const kind = el.getAttribute('data-reveal');
+      el.style.opacity = '0';
+      el.style.transform = kind === 'pop' ? 'scale(0.8)' : 'translateY(28px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      obs.observe(el);
+    });
+    this._revealObs = obs;
+
+    // Stat counters
+    const statsRow = root.querySelector('#statsRow');
+    if (statsRow) {
+      const counterObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !this.countersStarted) {
+            this.countersStarted = true;
+            this.runCounters();
+            counterObs.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      counterObs.observe(statsRow);
+    }
+
+    // Testimonial autoplay
+    if (this.props.testimonialsAutoplay ?? true) {
+      this.testimonialTimer = setInterval(() => {
+        this.setState(s => ({ testimonialIdx: (s.testimonialIdx + 1) % this.testimonialsData.length }));
+      }, 4200);
+    }
+
+    // Puntos clicables + swipe táctil en el carrusel de testimonios (móvil).
+    const dotsEl = root.querySelector('#testimonialDots');
+    if (dotsEl) {
+      this._onDotClick = (e) => {
+        const dot = e.target.closest('[data-idx]');
+        if (!dot) return;
+        this.setState({ testimonialIdx: Number(dot.dataset.idx) });
+      };
+      dotsEl.addEventListener('click', this._onDotClick);
+    }
+    const carouselEl = root.querySelector('#testimonialCarousel');
+    if (carouselEl) {
+      let touchStartX = 0;
+      const total = this.testimonialsData.length;
+      this._onTouchStart = (e) => { touchStartX = e.touches[0].clientX; };
+      this._onTouchEnd = (e) => {
+        const delta = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(delta) < 40) return; // gesto muy corto, lo ignora
+        this.setState(s => ({ testimonialIdx: (s.testimonialIdx + (delta < 0 ? 1 : -1) + total) % total }));
+      };
+      carouselEl.addEventListener('touchstart', this._onTouchStart, { passive: true });
+      carouselEl.addEventListener('touchend', this._onTouchEnd);
+    }
+  }
+
+  runCounters() {
+    const duration = 1400;
+    const start = performance.now();
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      this.setState({
+        statGarantia: Math.round(eased * 100) + '%',
+        statCiudades: Math.round(eased * 6) + '+'
+      });
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  componentWillUnmount() {
+    if (this._onCmsData) window.removeEventListener('cms:data-ready', this._onCmsData);
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+    if (this._heroMove) {
+      this._heroMove.hero.removeEventListener('mousemove', this._heroMove.onMove);
+      this._heroMove.hero.removeEventListener('mouseleave', this._heroMove.onLeave);
+    }
+    if (this._revealObs) this._revealObs.disconnect();
+    if (this.testimonialTimer) clearInterval(this.testimonialTimer);
+    const root = this.rootEl;
+    if (root) {
+      const dotsEl = root.querySelector('#testimonialDots');
+      if (dotsEl && this._onDotClick) dotsEl.removeEventListener('click', this._onDotClick);
+      const carouselEl = root.querySelector('#testimonialCarousel');
+      if (carouselEl) {
+        if (this._onTouchStart) carouselEl.removeEventListener('touchstart', this._onTouchStart);
+        if (this._onTouchEnd) carouselEl.removeEventListener('touchend', this._onTouchEnd);
+      }
+      const backToTopEl = root.querySelector('#backToTop');
+      if (backToTopEl && this._onBackToTop) backToTopEl.removeEventListener('click', this._onBackToTop);
+    }
+  }
+
+  renderVals() {
+    // CMS_DATA es llenado por js/content-loader.js con lo que haya en la hoja
+    // de Google Sheets. Si todavía no llegó (o la hoja está vacía en esa
+    // sección), se usa el contenido de siempre como respaldo — el sitio nunca
+    // se queda sin contenido por un fallo o demora de red.
+    const cms = window.__CMS_DATA__ || {};
+    const autoplay = this.props.testimonialsAutoplay ?? true;
+    const idx = this.state.testimonialIdx;
+
+    const servicios = (cms.servicios && cms.servicios.length) ? cms.servicios : this.services;
+    const precios = (cms.precios && cms.precios.length) ? cms.precios : this.pricing;
+    const ciudades = (cms.ciudades && cms.ciudades.length) ? cms.ciudades.map((c) => c.nombre) : this.cities;
+    const testimoniosBase = (cms.testimonios && cms.testimonios.length) ? cms.testimonios : this.testimonialsData;
+    const testimonials = testimoniosBase.map((t, i) => ({
+      ...t,
+      opacity: i === idx ? 1 : 0,
+      pointerEvents: i === idx ? 'auto' : 'none',
+      dotColor: i === idx ? '#00c853' : '#c7d7f0',
+      idx: i,
+      initials: String(t.author || '').split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('')
+    }));
+    const marqueeTexto = cms.config && cms.config.marquee_texto;
+    const marqueeItems = marqueeTexto
+      ? Array.from({ length: this.marqueeItems.length }, () => marqueeTexto)
+      : this.marqueeItems;
+
+    // Busca en la hoja Media la imagen registrada para una "seccion" dada;
+    // si no hay dato (o todavía no cargó), usa el archivo actual como respaldo.
+    const mediaUrl = (seccion, fallback) => {
+      const m = cms.media && cms.media.find((x) => x.seccion === seccion);
+      return m ? m.url : fallback;
+    };
+
+    return {
+      setRootRef: this.setRootRef,
+      bubbles: this.bubbles,
+      services: servicios,
+      pricing: precios,
+      cities: ciudades,
+      citiesCount: ciudades.length,
+      testimonials,
+      marqueeItems,
+      statGarantia: this.state.statGarantia,
+      statCiudades: this.state.statCiudades,
+      heroAurora: (this.props.heroEffect ?? 'aurora') === 'aurora',
+      testimonialsAutoplay: autoplay,
+      testimonialsAutoplayOff: !autoplay,
+      waNumero: (cms.config && cms.config.whatsapp_numero) || '573118298533',
+      waNumeroDisplay: (cms.config && cms.config.whatsapp_numero_display) || '311 829 8533',
+      logoUrl: mediaUrl('logo', 'assets/images/logo-transparent.png'),
+      slider1AntesUrl: mediaUrl('resultados-1-antes', 'assets/images/img-04.jpg'),
+      slider1DespuesUrl: mediaUrl('resultados-1-despues', 'assets/images/img-03.jpg'),
+      slider2AntesUrl: mediaUrl('resultados-2-antes', 'assets/images/img-05.jpg'),
+      slider2DespuesUrl: mediaUrl('resultados-2-despues', 'assets/images/img-02.jpg'),
+      coberturaUrl: mediaUrl('cobertura', 'assets/images/tech-scooter-cobertura.jpg'),
+      hero1Url: mediaUrl('hero-1', 'assets/images/sofa-vapor-closeup.jpg'),
+      hero2Url: mediaUrl('hero-2', 'assets/images/alfombra-patio-exterior.jpg'),
+      hero3Url: mediaUrl('hero-3', 'assets/images/equipo-quitando-mancha.jpg'),
+      quienesSomosPrincipalUrl: mediaUrl('quienes-somos-principal', 'assets/images/equipo-quitando-mancha.jpg'),
+      quienesSomos2Url: mediaUrl('quienes-somos-2', 'assets/images/equipo-experiencia-alfombra.jpg'),
+      quienesSomos3Url: mediaUrl('quienes-somos-3', 'assets/images/equipo-uniformado-pasillo.jpg'),
+      compromiso1Url: mediaUrl('compromiso-1', 'assets/images/certificado-calidad-seguridad.jpg'),
+      compromiso2Url: mediaUrl('compromiso-2', 'assets/images/productos-eco-jlh.jpg'),
+      compromiso3Url: mediaUrl('compromiso-3', 'assets/images/cuidado-hogar-familia.jpg')
+    };
+  }
+}
+
+</script>
+
+<script src="js/content-loader.js"></script>
+
+</body></html>
