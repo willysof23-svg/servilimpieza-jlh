@@ -46,6 +46,12 @@
   // Galería al vuelo si el clic en "Galería" la encuentra ausente.
   let ultimosMediaRows = [];
 
+  // Promesa de la carga de datos en curso. El clic en "Galería" la espera
+  // antes de intentar desplazarse, para no fallar si el usuario hace clic
+  // en el primer segundo, antes de que responda Google (ver
+  // interceptarClicGaleria_).
+  let cargaCMSPromise = null;
+
   /**
    * renderGaleria_ — construye la sección "Galería" (fotos/video adicionales,
    * ej. antes-y-después sueltos) a partir de las filas de Media cuya
@@ -181,26 +187,38 @@
   /**
    * interceptarClicGaleria_ — controla a mano el clic en el enlace "Galería"
    * del menú, en vez de dejar que el navegador use su salto de ancla nativo.
-   * El framework original vuelve a dibujar partes de la página (ej. el
-   * carrusel de testimonios) y en ese proceso puede quitar la sección de
-   * Galería justo antes del clic, haciendo fallar el salto nativo. Esta
-   * función intercepta el clic, reconstruye la sección si hace falta, y se
-   * desplaza a mano — así siempre funciona sin importar el estado del resto
-   * de la página en ese instante. Recibe: nada. Retorna: nada. Llamada por:
-   * el IIFE al final de este archivo.
+   * Dos problemas que resuelve: (1) el framework original vuelve a dibujar
+   * partes de la página y puede quitar la sección de Galería justo antes del
+   * clic; (2) si se hace clic muy rápido (antes de 1-2 segundos desde que
+   * carga la página), los datos de Google todavía no llegaron y la sección
+   * ni siquiera existe todavía. Por eso esta función ESPERA a que la carga
+   * de datos termine (cargaCMSPromise) antes de construir/buscar la sección
+   * y desplazarse. Recibe: nada. Retorna: nada. Llamada por: el IIFE al
+   * final de este archivo.
    */
   function interceptarClicGaleria_() {
-    document.addEventListener('click', (e) => {
+    // capture:true — se ejecuta ANTES que cualquier otro manejador de clic
+    // que pudiera detener la propagación del evento, para que esto nunca
+    // dependa de que ningún otro código "deje pasar" el clic.
+    document.addEventListener('click', async (e) => {
       const link = e.target.closest('a[href="#galeria-jlh"]');
       if (!link) return;
       e.preventDefault();
+
+      if (cargaCMSPromise) await cargaCMSPromise; // espera si Google aún no ha respondido
+
       if (!document.getElementById('galeria-jlh')) {
         renderGaleria_(ultimosMediaRows);
       }
-      document.getElementById('galeria-jlh')?.scrollIntoView({ behavior: 'smooth' });
-    });
+      const el = document.getElementById('galeria-jlh');
+      if (!el) return; // no hay elementos de galería configurados hoy: no hay a dónde ir
+      // Coordenada calculada al vuelo (no se confía en un valor guardado
+      // previamente) para que siempre apunte a la posición real actual.
+      const y = el.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }, true);
   }
 
   interceptarClicGaleria_();
-  cargarDatosCMS();
+  cargaCMSPromise = cargarDatosCMS();
 })();
