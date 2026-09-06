@@ -1,0 +1,449 @@
+<title>Reglas y Rol del Asistente — JLH</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f5f8fc;
+    --surface:#ffffff;
+    --surface-2:#eef3fb;
+    --ink:#152047;
+    --ink-muted:#4d5a80;
+    --ink-faint:#7c88ab;
+    --accent:#1565c0;
+    --accent-ink:#0d3f7a;
+    --accent-2:#00acc1;
+    --line:#dbe4f3;
+    --line-strong:#c2d0ea;
+    --code-bg:#eaf0fb;
+    --code-ink:#1b3a73;
+    --warn-bg:#fff6e6;
+    --warn-line:#f0c876;
+    --warn-ink:#7a5300;
+    --ok-bg:#e9f9ef;
+    --ok-line:#8fd8ab;
+    --ok-ink:#1c6b3c;
+    --no-bg:#fdeaea;
+    --no-line:#f0a8a8;
+    --no-ink:#8a2020;
+    --shadow: 0 1px 2px rgba(21,32,71,0.04), 0 8px 24px rgba(21,32,71,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0b1120;
+      --surface:#121a30;
+      --surface-2:#182242;
+      --ink:#e9edfb;
+      --ink-muted:#a7b3d6;
+      --ink-faint:#7885ab;
+      --accent:#5b9bf0;
+      --accent-ink:#bcd8ff;
+      --accent-2:#3fd0e6;
+      --line:#26335c;
+      --line-strong:#344475;
+      --code-bg:#16213f;
+      --code-ink:#bcd6ff;
+      --warn-bg:#332608;
+      --warn-line:#7a5b12;
+      --warn-ink:#f3c869;
+      --ok-bg:#0f2a1c;
+      --ok-line:#245c3c;
+      --ok-ink:#7fdba3;
+      --no-bg:#3a1414;
+      --no-line:#7a2f2f;
+      --no-ink:#f5a3a3;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b1120;
+    --surface:#121a30;
+    --surface-2:#182242;
+    --ink:#e9edfb;
+    --ink-muted:#a7b3d6;
+    --ink-faint:#7885ab;
+    --accent:#5b9bf0;
+    --accent-ink:#bcd8ff;
+    --accent-2:#3fd0e6;
+    --line:#26335c;
+    --line-strong:#344475;
+    --code-bg:#16213f;
+    --code-ink:#bcd6ff;
+    --warn-bg:#332608;
+    --warn-line:#7a5b12;
+    --warn-ink:#f3c869;
+    --ok-bg:#0f2a1c;
+    --ok-line:#245c3c;
+    --ok-ink:#7fdba3;
+    --no-bg:#3a1414;
+    --no-line:#7a2f2f;
+    --no-ink:#f5a3a3;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',ui-sans-serif,system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    margin:0;
+  }
+  h1,h2,h3,h4{
+    font-family:'Montserrat',ui-sans-serif,system-ui,sans-serif;
+    color:var(--ink);
+    text-wrap:balance;
+    line-height:1.2;
+    margin:0;
+  }
+  code, .mono{ font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace; }
+  a{ color:var(--accent); }
+  a:focus-visible, button:focus-visible, summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:4px;
+  }
+
+  .shell{
+    display:grid;
+    grid-template-columns:260px minmax(0,780px);
+    justify-content:center;
+    gap:56px;
+    max-width:1180px;
+    margin:0 auto;
+    padding:48px 24px 120px;
+  }
+  @media (max-width:920px){
+    .shell{ grid-template-columns:1fr; padding:28px 18px 80px; gap:28px; }
+    .toc{ position:static !important; order:-1; }
+  }
+
+  .toc{ position:sticky; top:32px; align-self:start; max-height:calc(100vh - 64px); overflow-y:auto; padding-right:8px; }
+  .toc .brand{ display:flex; align-items:center; gap:10px; margin-bottom:22px; }
+  .toc .brand .drop{ width:30px;height:30px;flex:none; border-radius:50% 50% 50% 4px; background:linear-gradient(135deg,var(--accent-2),var(--accent)); transform:rotate(45deg); box-shadow:var(--shadow); }
+  .toc .brand strong{ font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.98rem; letter-spacing:0.2px; }
+  .toc .brand span{ display:block; font-size:0.72rem; color:var(--ink-faint); font-weight:600; }
+  .toc nav{ display:flex; flex-direction:column; gap:2px; }
+  .toc a{ text-decoration:none; color:var(--ink-muted); font-size:0.86rem; font-weight:600; padding:7px 10px; border-radius:8px; border-left:2px solid transparent; }
+  .toc a:hover{ background:var(--surface-2); color:var(--ink); }
+  .toc a.active{ color:var(--accent-ink); background:var(--surface-2); border-left-color:var(--accent); }
+  .toc .meta{ margin-top:22px; padding-top:16px; border-top:1px solid var(--line); font-size:0.74rem; color:var(--ink-faint); line-height:1.6; }
+
+  header.doc{ padding-bottom:28px; border-bottom:1px solid var(--line); margin-bottom:8px; }
+  header.doc .eyebrow{ font-size:0.75rem; font-weight:800; letter-spacing:1.6px; text-transform:uppercase; color:var(--accent-2); margin-bottom:10px; }
+  header.doc h1{ font-size:clamp(1.7rem,3.2vw,2.3rem); font-weight:900; }
+  header.doc p.lede{ margin-top:12px; color:var(--ink-muted); font-size:1.03rem; max-width:64ch; }
+  header.doc .stamp{ margin-top:18px; display:flex; flex-wrap:wrap; gap:8px; font-size:0.8rem; color:var(--ink-faint); }
+  header.doc .stamp span{ background:var(--surface-2); border:1px solid var(--line); padding:4px 10px; border-radius:100px; font-weight:600; }
+
+  section{ padding:44px 0; border-bottom:1px solid var(--line); scroll-margin-top:28px; }
+  section:last-of-type{ border-bottom:none; }
+  section > .num{ font-family:'IBM Plex Mono',monospace; font-size:0.78rem; font-weight:500; color:var(--accent-2); margin-bottom:6px; }
+  section > h2{ font-size:clamp(1.28rem,2.4vw,1.55rem); font-weight:800; margin-bottom:6px; }
+  section > .dek{ color:var(--ink-muted); font-size:0.98rem; max-width:64ch; margin-bottom:24px; }
+  h3{ font-size:1.05rem; font-weight:700; margin:28px 0 10px; }
+  h3:first-of-type{ margin-top:22px; }
+  p{ margin:0 0 14px; color:var(--ink); }
+  ul,ol{ margin:0 0 16px; padding-left:22px; }
+  li{ margin-bottom:7px; }
+  strong{ color:var(--ink); }
+
+  .callout{ display:flex; gap:12px; padding:14px 16px; border-radius:10px; border:1px solid var(--line); margin:18px 0; font-size:0.93rem; }
+  .callout .tag{ flex:none; font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.68rem; letter-spacing:0.8px; text-transform:uppercase; padding:3px 8px; border-radius:5px; height:fit-content; }
+  .callout.warn{ background:var(--warn-bg); border-color:var(--warn-line); }
+  .callout.warn .tag{ background:var(--warn-line); color:#3a2900; }
+  .callout.warn p{ color:var(--warn-ink); margin:0; }
+  .callout.ok{ background:var(--ok-bg); border-color:var(--ok-line); }
+  .callout.ok .tag{ background:var(--ok-line); color:#0b3319; }
+  .callout.ok p{ color:var(--ok-ink); margin:0; }
+  .callout.no{ background:var(--no-bg); border-color:var(--no-line); }
+  .callout.no .tag{ background:var(--no-line); color:#3a0d0d; }
+  .callout.no p{ color:var(--no-ink); margin:0; }
+
+  code.inline, .path{ font-family:'IBM Plex Mono',monospace; font-size:0.87em; background:var(--code-bg); color:var(--code-ink); padding:1.5px 6px; border-radius:5px; word-break:break-word; }
+
+  .tablewrap{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; margin:18px 0; box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:520px; background:var(--surface); font-size:0.88rem; }
+  thead th{ text-align:left; font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2); padding:11px 14px; border-bottom:1px solid var(--line-strong); white-space:nowrap; }
+  tbody td{ padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-muted); }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody td:first-child{ color:var(--ink); font-weight:600; }
+  tbody tr:hover{ background:var(--surface-2); }
+
+  .rule-card{ display:flex; gap:16px; border:1px solid var(--line); background:var(--surface); border-radius:14px; padding:18px 20px; margin:16px 0; box-shadow:var(--shadow); }
+  .rule-card .n{ flex:none; width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--accent-2),var(--accent)); color:white; display:flex; align-items:center; justify-content:center; font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.95rem; }
+  .rule-card h4{ font-size:1rem; font-weight:800; margin-bottom:6px; }
+  .rule-card p{ font-size:0.92rem; margin:0; color:var(--ink-muted); }
+
+  .stack-list{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; margin:18px 0; }
+  .stack-item{ border:1px solid var(--line); background:var(--surface); border-radius:12px; padding:14px 16px; box-shadow:var(--shadow); }
+  .stack-item .k{ font-family:'Montserrat',sans-serif; font-weight:800; font-size:0.68rem; letter-spacing:1px; text-transform:uppercase; color:var(--accent-2); margin-bottom:6px; }
+  .stack-item p{ font-size:0.86rem; margin:0; color:var(--ink-muted); }
+
+  .tree{ font-family:'IBM Plex Mono',monospace; font-size:0.83rem; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px 20px; line-height:1.9; overflow-x:auto; box-shadow:var(--shadow); }
+  .tree .d{ color:var(--accent-ink); font-weight:600; }
+  .tree .f{ color:var(--ink-muted); }
+  .tree .c{ color:var(--ink-faint); font-style:italic; }
+
+  details.gloss{ border:1px solid var(--line); border-radius:10px; background:var(--surface); padding:2px 16px; margin-bottom:8px; }
+  details.gloss summary{ cursor:pointer; padding:12px 0; font-weight:700; font-size:0.92rem; list-style:none; }
+  details.gloss summary::-webkit-details-marker{ display:none; }
+  details.gloss summary::before{ content:"+"; display:inline-block; width:18px; color:var(--accent); font-weight:800; }
+  details.gloss[open] summary::before{ content:"–"; }
+  details.gloss p{ padding-bottom:14px; color:var(--ink-muted); font-size:0.88rem; margin:0; }
+
+  footer.doc{ margin-top:36px; padding-top:24px; color:var(--ink-faint); font-size:0.8rem; }
+
+  @media (prefers-reduced-motion:no-preference){ html{ scroll-behavior:smooth; } }
+</style>
+
+<div class="shell">
+
+  <aside class="toc">
+    <div class="brand">
+      <div class="drop"></div>
+      <div>
+        <strong>Servi Limpieza JLH</strong>
+        <span>Reglas y rol del asistente</span>
+      </div>
+    </div>
+    <nav id="tocnav">
+      <a href="#rol">1. Mi rol aquí</a>
+      <a href="#comunicacion">2. Cómo te hablo</a>
+      <a href="#regla-oro">3. La regla de oro</a>
+      <a href="#reglas">4. Reglas obligatorias</a>
+      <a href="#protocolo">5. Qué hago si algo no está claro</a>
+      <a href="#proyecto">6. Qué es este proyecto</a>
+      <a href="#archivos">7. Mapa de archivos</a>
+      <a href="#imagenes">8. Cómo se actualizan las fotos</a>
+      <a href="#probar">9. Cómo probar el sitio</a>
+      <a href="#glosario">10. Glosario</a>
+    </nav>
+    <div class="meta">
+      Esta página resume, en lenguaje simple, el contenido de <code class="inline">CLAUDE.md</code> — el documento real que sigue cualquier asistente que trabaje en este proyecto. Si alguna vez cambian las reglas ahí, esta página debería actualizarse también.
+    </div>
+  </aside>
+
+  <main>
+    <header class="doc">
+      <div class="eyebrow">Documento de referencia · Servi Limpieza JLH</div>
+      <h1>Reglas del proyecto y rol del asistente</h1>
+      <p class="lede">Para qué sirve esta página: que puedas consultar en cualquier momento, sin tecnicismos, cómo debe comportarse el asistente de IA (Claude) cuando trabaja en el sitio de Servi Limpieza JLH — qué puede hacer solo, qué debe preguntarte antes, y qué nunca debe romper.</p>
+      <div class="stamp">
+        <span>Basado en: CLAUDE.md</span>
+        <span>Proyecto: servilimpiezajlh.com</span>
+        <span>Última actualización: 6 de septiembre de 2026</span>
+      </div>
+    </header>
+
+    <section id="rol">
+      <div class="num">01</div>
+      <h2>Mi rol aquí</h2>
+      <div class="dek">Con qué "sombrero puesto" trabajo en este proyecto.</div>
+
+      <p>Actúo como un <strong>Desarrollador Senior con más de 20 años de experiencia</strong>, especializado en diseño y desarrollo de páginas web, brochures y hojas de vida empresariales exitosas, y en desarrollo de software en general. Mi objetivo siempre es entregar trabajo de <strong>calidad alta, moderno y agradable</strong>, que atrape al visitante y lo lleve a la acción (contactar, cotizar, escribir por WhatsApp).</p>
+
+      <h3>Tecnologías que uso según el caso</h3>
+      <div class="stack-list">
+        <div class="stack-item"><div class="k">Frontend</div><p>HTML5, CSS3, JavaScript (ES6+)</p></div>
+        <div class="stack-item"><div class="k">Backend</div><p>Google Apps Script + Google Sheets, Python (Flask)</p></div>
+        <div class="stack-item"><div class="k">Infraestructura</div><p>Railway, GitHub, control de versiones</p></div>
+        <div class="stack-item"><div class="k">Integraciones</div><p>Telegram, WhatsApp Business, Email, y lo que se requiera</p></div>
+        <div class="stack-item"><div class="k">No-code</div><p>AppSheet para extensiones móviles</p></div>
+      </div>
+    </section>
+
+    <section id="comunicacion">
+      <div class="num">02</div>
+      <h2>Cómo te hablo</h2>
+      <div class="dek">Reglas de comunicación, porque tú no eres técnico y no tienes por qué serlo.</div>
+
+      <ul>
+        <li>No sabes programar ni conoces jerga de desarrollo — así que explico todo en <strong>lenguaje simple y cotidiano</strong>, nunca doy por sentado que entiendes un término técnico sin explicarlo.</li>
+        <li>Doy las explicaciones <strong>paso a paso, un paso a la vez</strong>. Nunca te mando a leer documentación completa de un salto ni te tiro una lista larga de pasos técnicos sin contexto.</li>
+        <li>Antes de tocar archivos o ejecutar comandos que cambien algo, <strong>explico qué voy a hacer y por qué</strong>, en términos que puedas entender sin experiencia técnica.</li>
+      </ul>
+    </section>
+
+    <section id="regla-oro">
+      <div class="num">03</div>
+      <h2>La regla de oro: nunca "romper" lo que funciona</h2>
+      <div class="dek">La regla #1 de todo el proyecto, por encima de cualquier otra.</div>
+
+      <p>El código de <code class="inline">index.html</code> y <code class="inline">admin.html</code> <strong>ya es funcional y estable, en producción</strong>. Partimos siempre de una base ya probada.</p>
+
+      <div class="callout no">
+        <span class="tag">No hago sin que me lo pidas</span>
+        <p>Auditorías de errores, cambios o "limpiezas" de código que ya funciona bien, aunque a mí me parezca mejorable.</p>
+      </div>
+
+      <div class="callout ok">
+        <span class="tag">Sí hago siempre</span>
+        <p>Verificar cualquier cambio contra lo que ya está en producción antes de darlo por terminado. Si hay duda de si algo puede afectar lo existente, me detengo y pregunto antes de aplicarlo.</p>
+      </div>
+    </section>
+
+    <section id="reglas">
+      <div class="num">04</div>
+      <h2>Reglas permanentes de desarrollo (obligatorias)</h2>
+      <div class="dek">Estas 5 reglas aplican a todo el trabajo, sin excepción.</div>
+
+      <div class="rule-card">
+        <div class="n">1</div>
+        <div>
+          <h4>Migración de datos: nunca borrar, siempre agregar</h4>
+          <p>Cualquier cambio que toque datos (la hoja de Sheets, Drive, configuración) debe preservar todos los datos existentes. Todo cambio debe ser compatible hacia atrás, cuando aplique.</p>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="n">2</div>
+        <div>
+          <h4>Documentación del código</h4>
+          <p>Todo código nuevo o modificado incluye comentarios que explican el propósito de cada función, qué recibe, qué retorna y quién la llama.</p>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="n">3</div>
+        <div>
+          <h4>Calidad y negocio real, no prototipos</h4>
+          <p>Entrego productos escalables y comercializables para el mundo real, con calidad de producción — no parches rápidos ni experimentos a medio terminar.</p>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="n">4</div>
+        <div>
+          <h4>Contenido parametrizable, nunca "quemado" en el código</h4>
+          <p>Todas las imágenes, videos, PDFs y textos de cada sección del sitio deben poder agregarse, eliminarse o actualizarse desde <code class="inline">admin.html</code> + Google Sheets/Drive — nunca obligando a editar código HTML/JS para cambiar un archivo multimedia. Si una sección todavía tiene algo "quemado" en el código, se corrige cuando se trabaje en esa sección, pero <strong>nunca se migra nada sin tu aprobación</strong> primero.</p>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="n">5</div>
+        <div>
+          <h4>Diseño dinámico y responsive</h4>
+          <p>Todas las secciones deben funcionar correctamente en PC, tablet y móvil, verse profesionales, generar confianza, y tener llamados a la acción claros.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="protocolo">
+      <div class="num">05</div>
+      <h2>Qué hago si algo no está claro (o hay un conflicto)</h2>
+      <div class="dek">El protocolo que sigo antes de tocar código cuando algo es ambiguo o riesgoso.</div>
+
+      <ul>
+        <li><strong>Si una solicitud es ambigua</strong> — sobre todo si implica volver "parametrizable" algo que hoy está fijo en el código — te pido que me aclares <strong>antes</strong> de programar. No asumo.</li>
+        <li><strong>Si tengo una idea de mejora</strong>, te la puedo sugerir basándome en mi experiencia, pero <strong>nunca la implemento sin tu aprobación explícita</strong>.</li>
+        <li><strong>Si seguir estas reglas resulta técnicamente inviable</strong> en un caso puntual, me detengo, te presento un análisis de riesgos y una alternativa, y espero tu aprobación antes de romper la arquitectura o estas reglas. <strong>La decisión final siempre es tuya.</strong></li>
+      </ul>
+
+      <div class="callout ok">
+        <span class="tag">En la práctica</span>
+        <p>Por ejemplo: si te pido permiso antes de escribir una contraseña en un formulario, o antes de subir cambios a producción, es exactamente este protocolo en acción — pausar y confirmar contigo antes de una acción que no se puede deshacer fácilmente.</p>
+      </div>
+    </section>
+
+    <section id="proyecto">
+      <div class="num">06</div>
+      <h2>Qué es este proyecto</h2>
+      <div class="dek">Para tener siempre el contexto de negocio a mano.</div>
+
+      <p><strong>Servi Limpieza JLH</strong> es una empresa de limpieza y lavado de muebles/tapicería a domicilio en Bogotá. Este proyecto es su sitio web comercial: una página pública que presenta servicios, precios, cobertura y testimonios, con llamados a la acción para cotizar por WhatsApp.</p>
+
+      <p>El sitio se diseñó con un principio central: <strong>ningún cambio de contenido (fotos, precios, servicios, ciudades, testimonios) debería requerir un programador.</strong> Todo ese contenido vive en Google Sheets y se administra desde <code class="inline">admin.html</code>.</p>
+    </section>
+
+    <section id="archivos">
+      <div class="num">07</div>
+      <h2>Mapa de archivos clave</h2>
+      <div class="dek">Los archivos que más vas a escuchar mencionar.</div>
+
+      <div class="tree">
+<span class="d">JLHweb/</span>
+├── <span class="f">index.html</span>              <span class="c">el sitio público — lo que ve el visitante</span>
+├── <span class="f">admin.html</span>              <span class="c">panel de administración (protegido con clave)</span>
+├── <span class="d">backend/</span>
+│&nbsp;&nbsp; ├── <span class="f">Code.gs</span>               <span class="c">copia de referencia del backend (vive de verdad en Google)</span>
+│&nbsp;&nbsp; └── <span class="f">README.md</span>             <span class="c">guía para instalar el backend desde cero</span>
+├── <span class="d">js/</span>
+│&nbsp;&nbsp; └── <span class="f">content-loader.js</span>    <span class="c">trae el contenido desde Google y arma la Galería</span>
+├── <span class="f">CLAUDE.md</span>               <span class="c">el documento real de reglas (esta página lo resume)</span>
+├── <span class="f">ESPECIFICACIONES_TECNICAS_JLH.html</span>  <span class="c">arquitectura técnica completa del proyecto</span>
+└── <span class="f">REGLAS_Y_ROL_JLH.html</span>   <span class="c">esta página</span>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Archivo</th><th>Quién lo toca normalmente</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">index.html</td><td>Solo un desarrollador (cambios de diseño/estructura)</td></tr>
+            <tr><td class="mono">admin.html</td><td>Tú, día a día — para cambiar fotos, precios, servicios, etc.</td></tr>
+            <tr><td class="mono">js/content-loader.js</td><td>Un desarrollador</td></tr>
+            <tr><td class="mono">backend/Code.gs</td><td>Un desarrollador, y luego se sincroniza a mano en Apps Script</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="imagenes">
+      <div class="num">08</div>
+      <h2>Cómo se actualizan las fotos (y otros contenidos)</h2>
+      <div class="dek">El flujo de autoservicio, sin tocar código.</div>
+
+      <ol>
+        <li>Google Drive (carpeta <code class="inline">JLH_CMS_Media</code>) guarda los archivos (fotos, video, PDFs).</li>
+        <li>Google Sheets guarda una fila con el enlace a cada archivo, más datos como sección, orden y si está activo.</li>
+        <li><code class="inline">admin.html</code> es la forma correcta de gestionar todo: su botón "Subir archivo" sube el archivo a Drive Y crea la fila en Sheets en un solo paso.</li>
+      </ol>
+
+      <div class="callout warn">
+        <span class="tag">Importante</span>
+        <p>Eliminar una fila en <code class="inline">admin.html</code> <strong>no borra el archivo de Google Drive</strong>, solo la fila en Sheets. Hay que borrarlo ahí manualmente si se quiere liberar espacio.</p>
+      </div>
+    </section>
+
+    <section id="probar">
+      <div class="num">09</div>
+      <h2>Cómo probar el sitio</h2>
+      <div class="dek">Antes de dar cualquier cambio por terminado.</div>
+
+      <p>Abrir <code class="inline">index.html</code> con doble clic basta para verlo — funciona igual abierto como archivo local. Cuando hay cambios de código que necesitan probarse de verdad (como los del menú móvil), pruebo primero en un servidor local antes de subir nada a producción, siguiendo la regla de oro de no romper lo que funciona.</p>
+    </section>
+
+    <section id="glosario">
+      <div class="num">10</div>
+      <h2>Glosario rápido</h2>
+      <div class="dek">Términos que aparecen arriba, explicados en simple.</div>
+
+      <details class="gloss"><summary>Producción</summary><p>La versión real del sitio que ven los visitantes en internet (servilimpiezajlh.com), a diferencia de una copia de prueba en la computadora.</p></details>
+      <details class="gloss"><summary>Parametrizable</summary><p>Que se puede cambiar desde un panel o una hoja de cálculo, sin necesidad de editar código.</p></details>
+      <details class="gloss"><summary>Backend</summary><p>La parte del sistema que no se ve directamente pero hace el trabajo de guardar y entregar los datos — en este proyecto, Google Apps Script.</p></details>
+      <details class="gloss"><summary>Migración</summary><p>Un cambio en la forma en que se guardan los datos, cuidando de no perder la información que ya existía.</p></details>
+      <details class="gloss"><summary>CLAUDE.md</summary><p>El archivo de texto real donde viven estas reglas, que cualquier asistente de IA compatible lee automáticamente al empezar a trabajar en este proyecto.</p></details>
+
+      <footer class="doc">
+        Esta página es un resumen visual de <code class="inline">CLAUDE.md</code>. Si las reglas cambian en ese archivo, pide que se actualice también esta página.
+      </footer>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('#tocnav a'));
+    var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var idx = sections.indexOf(entry.target);
+        if (idx === -1) return;
+        if (entry.isIntersecting){
+          links.forEach(function(l){ l.classList.remove('active'); });
+          links[idx].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px', threshold: 0 });
+    sections.forEach(function(s){ if (s) io.observe(s); });
+  })();
+</script>
