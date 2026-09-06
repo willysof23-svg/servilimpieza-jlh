@@ -1,0 +1,899 @@
+<title>Especificaciones Técnicas JLH</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f5f8fc;
+    --surface:#ffffff;
+    --surface-2:#eef3fb;
+    --ink:#152047;
+    --ink-muted:#4d5a80;
+    --ink-faint:#7c88ab;
+    --accent:#1565c0;
+    --accent-ink:#0d3f7a;
+    --accent-2:#00acc1;
+    --line:#dbe4f3;
+    --line-strong:#c2d0ea;
+    --code-bg:#eaf0fb;
+    --code-ink:#1b3a73;
+    --warn-bg:#fff6e6;
+    --warn-line:#f0c876;
+    --warn-ink:#7a5300;
+    --ok-bg:#e9f9ef;
+    --ok-line:#8fd8ab;
+    --ok-ink:#1c6b3c;
+    --tag-github-bg:#e7e9ee; --tag-github-ink:#24292f;
+    --tag-netlify-bg:#dcf4ee; --tag-netlify-ink:#0e6b52;
+    --tag-google-bg:#e6f0fe; --tag-google-ink:#1a4faa;
+    --tag-drive-bg:#fff2d9; --tag-drive-ink:#8a5a00;
+    --tag-host-bg:#f1e7fb; --tag-host-ink:#5a2f9e;
+    --tag-wa-bg:#e2f9e9; --tag-wa-ink:#177a3d;
+    --shadow: 0 1px 2px rgba(21,32,71,0.04), 0 8px 24px rgba(21,32,71,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0b1120;
+      --surface:#121a30;
+      --surface-2:#182242;
+      --ink:#e9edfb;
+      --ink-muted:#a7b3d6;
+      --ink-faint:#7885ab;
+      --accent:#5b9bf0;
+      --accent-ink:#bcd8ff;
+      --accent-2:#3fd0e6;
+      --line:#26335c;
+      --line-strong:#344475;
+      --code-bg:#16213f;
+      --code-ink:#bcd6ff;
+      --warn-bg:#332608;
+      --warn-line:#7a5b12;
+      --warn-ink:#f3c869;
+      --ok-bg:#0f2a1c;
+      --ok-line:#245c3c;
+      --ok-ink:#7fdba3;
+      --tag-github-bg:#232a3a; --tag-github-ink:#d3d8e5;
+      --tag-netlify-bg:#0f2e29; --tag-netlify-ink:#7fe0c6;
+      --tag-google-bg:#152a4d; --tag-google-ink:#9dc1ff;
+      --tag-drive-bg:#3a2c05; --tag-drive-ink:#f0c266;
+      --tag-host-bg:#2a1f42; --tag-host-ink:#cfaef5;
+      --tag-wa-bg:#12301e; --tag-wa-ink:#7fe0a3;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b1120;
+    --surface:#121a30;
+    --surface-2:#182242;
+    --ink:#e9edfb;
+    --ink-muted:#a7b3d6;
+    --ink-faint:#7885ab;
+    --accent:#5b9bf0;
+    --accent-ink:#bcd8ff;
+    --accent-2:#3fd0e6;
+    --line:#26335c;
+    --line-strong:#344475;
+    --code-bg:#16213f;
+    --code-ink:#bcd6ff;
+    --warn-bg:#332608;
+    --warn-line:#7a5b12;
+    --warn-ink:#f3c869;
+    --ok-bg:#0f2a1c;
+    --ok-line:#245c3c;
+    --ok-ink:#7fdba3;
+    --tag-github-bg:#232a3a; --tag-github-ink:#d3d8e5;
+    --tag-netlify-bg:#0f2e29; --tag-netlify-ink:#7fe0c6;
+    --tag-google-bg:#152a4d; --tag-google-ink:#9dc1ff;
+    --tag-drive-bg:#3a2c05; --tag-drive-ink:#f0c266;
+    --tag-host-bg:#2a1f42; --tag-host-ink:#cfaef5;
+    --tag-wa-bg:#12301e; --tag-wa-ink:#7fe0a3;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',ui-sans-serif,system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    margin:0;
+  }
+  h1,h2,h3,h4{
+    font-family:'Montserrat',ui-sans-serif,system-ui,sans-serif;
+    color:var(--ink);
+    text-wrap:balance;
+    line-height:1.2;
+    margin:0;
+  }
+  code, .mono{
+    font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  a{ color:var(--accent); }
+  a:focus-visible, button:focus-visible, summary:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+    border-radius:4px;
+  }
+
+  .shell{
+    display:grid;
+    grid-template-columns:260px minmax(0,780px);
+    justify-content:center;
+    gap:56px;
+    max-width:1180px;
+    margin:0 auto;
+    padding:48px 24px 120px;
+  }
+  @media (max-width:920px){
+    .shell{ grid-template-columns:1fr; padding:28px 18px 80px; gap:28px; }
+    .toc{ position:static !important; order:-1; }
+  }
+
+  /* ---------- Sidebar / TOC ---------- */
+  .toc{
+    position:sticky;
+    top:32px;
+    align-self:start;
+    max-height:calc(100vh - 64px);
+    overflow-y:auto;
+    padding-right:8px;
+  }
+  .toc .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .toc .brand .drop{
+    width:30px;height:30px;flex:none;
+    border-radius:50% 50% 50% 4px;
+    background:linear-gradient(135deg,var(--accent-2),var(--accent));
+    transform:rotate(45deg);
+    box-shadow:var(--shadow);
+  }
+  .toc .brand strong{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:0.98rem;
+    letter-spacing:0.2px;
+  }
+  .toc .brand span{
+    display:block;
+    font-size:0.72rem;
+    color:var(--ink-faint);
+    font-weight:600;
+  }
+  .toc nav{ display:flex; flex-direction:column; gap:2px; }
+  .toc a{
+    text-decoration:none;
+    color:var(--ink-muted);
+    font-size:0.86rem;
+    font-weight:600;
+    padding:7px 10px;
+    border-radius:8px;
+    border-left:2px solid transparent;
+  }
+  .toc a:hover{ background:var(--surface-2); color:var(--ink); }
+  .toc a.active{
+    color:var(--accent-ink);
+    background:var(--surface-2);
+    border-left-color:var(--accent);
+  }
+  .toc .meta{
+    margin-top:22px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    font-size:0.74rem;
+    color:var(--ink-faint);
+    line-height:1.6;
+  }
+
+  /* ---------- Header ---------- */
+  header.doc{
+    padding-bottom:28px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:8px;
+  }
+  header.doc .eyebrow{
+    font-size:0.75rem;
+    font-weight:800;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:var(--accent-2);
+    margin-bottom:10px;
+  }
+  header.doc h1{
+    font-size:clamp(1.7rem,3.2vw,2.3rem);
+    font-weight:900;
+  }
+  header.doc p.lede{
+    margin-top:12px;
+    color:var(--ink-muted);
+    font-size:1.03rem;
+    max-width:64ch;
+  }
+  header.doc .stamp{
+    margin-top:18px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    font-size:0.8rem;
+    color:var(--ink-faint);
+  }
+  header.doc .stamp span{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    padding:4px 10px;
+    border-radius:100px;
+    font-weight:600;
+  }
+
+  /* ---------- Sections ---------- */
+  section{
+    padding:44px 0;
+    border-bottom:1px solid var(--line);
+    scroll-margin-top:28px;
+  }
+  section:last-of-type{ border-bottom:none; }
+  section > .num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;
+    font-weight:500;
+    color:var(--accent-2);
+    margin-bottom:6px;
+  }
+  section > h2{
+    font-size:clamp(1.28rem,2.4vw,1.55rem);
+    font-weight:800;
+    margin-bottom:6px;
+  }
+  section > .dek{
+    color:var(--ink-muted);
+    font-size:0.98rem;
+    max-width:64ch;
+    margin-bottom:24px;
+  }
+  h3{
+    font-size:1.05rem;
+    font-weight:700;
+    margin:28px 0 10px;
+  }
+  h3:first-of-type{ margin-top:22px; }
+  p{ margin:0 0 14px; color:var(--ink); }
+  ul,ol{ margin:0 0 16px; padding-left:22px; }
+  li{ margin-bottom:7px; }
+  strong{ color:var(--ink); }
+
+  .callout{
+    display:flex;
+    gap:12px;
+    padding:14px 16px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    margin:18px 0;
+    font-size:0.93rem;
+  }
+  .callout .tag{
+    flex:none;
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:0.68rem;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:5px;
+    height:fit-content;
+  }
+  .callout.warn{ background:var(--warn-bg); border-color:var(--warn-line); }
+  .callout.warn .tag{ background:var(--warn-line); color:#3a2900; }
+  .callout.warn p{ color:var(--warn-ink); margin:0; }
+  .callout.ok{ background:var(--ok-bg); border-color:var(--ok-line); }
+  .callout.ok .tag{ background:var(--ok-line); color:#0b3319; }
+  .callout.ok p{ color:var(--ok-ink); margin:0; }
+
+  code.inline, .path{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.87em;
+    background:var(--code-bg);
+    color:var(--code-ink);
+    padding:1.5px 6px;
+    border-radius:5px;
+    word-break:break-word;
+  }
+
+  .tablewrap{
+    overflow-x:auto;
+    border:1px solid var(--line);
+    border-radius:12px;
+    margin:18px 0;
+    box-shadow:var(--shadow);
+  }
+  table{
+    border-collapse:collapse;
+    width:100%;
+    min-width:560px;
+    background:var(--surface);
+    font-size:0.88rem;
+  }
+  thead th{
+    text-align:left;
+    font-family:'Montserrat',sans-serif;
+    font-size:0.7rem;
+    font-weight:800;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    background:var(--surface-2);
+    padding:11px 14px;
+    border-bottom:1px solid var(--line-strong);
+    white-space:nowrap;
+  }
+  tbody td{
+    padding:11px 14px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+    color:var(--ink-muted);
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody td:first-child{ color:var(--ink); font-weight:600; }
+  tbody tr:hover{ background:var(--surface-2); }
+
+  .pill{
+    display:inline-block;
+    font-family:'Montserrat',sans-serif;
+    font-size:0.68rem;
+    font-weight:800;
+    letter-spacing:0.4px;
+    padding:3px 9px;
+    border-radius:100px;
+  }
+  .pill.github{ background:var(--tag-github-bg); color:var(--tag-github-ink); }
+  .pill.netlify{ background:var(--tag-netlify-bg); color:var(--tag-netlify-ink); }
+  .pill.google{ background:var(--tag-google-bg); color:var(--tag-google-ink); }
+  .pill.drive{ background:var(--tag-drive-bg); color:var(--tag-drive-ink); }
+  .pill.host{ background:var(--tag-host-bg); color:var(--tag-host-ink); }
+  .pill.wa{ background:var(--tag-wa-bg); color:var(--tag-wa-ink); }
+
+  /* platform cards */
+  .platforms{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:14px;
+    margin:18px 0 8px;
+  }
+  .platform{
+    border:1px solid var(--line);
+    background:var(--surface);
+    border-radius:12px;
+    padding:16px;
+    box-shadow:var(--shadow);
+  }
+  .platform h4{
+    font-size:0.95rem;
+    font-weight:800;
+    margin-bottom:4px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .platform .role{
+    font-size:0.78rem;
+    color:var(--ink-faint);
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  .platform p{ font-size:0.85rem; margin:0; color:var(--ink-muted); }
+
+  /* architecture flow */
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:stretch;
+    gap:10px;
+    margin:22px 0;
+  }
+  .flow .box{
+    flex:1 1 180px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px;
+    box-shadow:var(--shadow);
+  }
+  .flow .box .k{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:0.62rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--accent-2);
+    margin-bottom:6px;
+  }
+  .flow .box h4{ font-size:0.95rem; font-weight:800; margin-bottom:6px; }
+  .flow .box p{ font-size:0.82rem; color:var(--ink-muted); margin:0; }
+  .flow .arrow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--ink-faint);
+    font-size:1.3rem;
+    flex:0 0 20px;
+  }
+  @media (max-width:640px){
+    .flow{ flex-direction:column; }
+    .flow .arrow{ transform:rotate(90deg); }
+  }
+
+  /* file tree */
+  .tree{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.83rem;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+    line-height:1.9;
+    overflow-x:auto;
+    box-shadow:var(--shadow);
+  }
+  .tree .d{ color:var(--accent-ink); font-weight:600; }
+  .tree .f{ color:var(--ink-muted); }
+  .tree .c{ color:var(--ink-faint); font-style:italic; }
+
+  details.gloss{
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--surface);
+    padding:2px 16px;
+    margin-bottom:8px;
+  }
+  details.gloss summary{
+    cursor:pointer;
+    padding:12px 0;
+    font-weight:700;
+    font-size:0.92rem;
+    list-style:none;
+  }
+  details.gloss summary::-webkit-details-marker{ display:none; }
+  details.gloss summary::before{
+    content:"+";
+    display:inline-block;
+    width:18px;
+    color:var(--accent);
+    font-weight:800;
+  }
+  details.gloss[open] summary::before{ content:"–"; }
+  details.gloss p{ padding-bottom:14px; color:var(--ink-muted); font-size:0.88rem; margin:0; }
+
+  footer.doc{
+    margin-top:36px;
+    padding-top:24px;
+    color:var(--ink-faint);
+    font-size:0.8rem;
+  }
+
+  @media (prefers-reduced-motion:no-preference){
+    html{ scroll-behavior:smooth; }
+  }
+</style>
+
+<div class="shell">
+
+  <aside class="toc">
+    <div class="brand">
+      <div class="drop"></div>
+      <div>
+        <strong>Servi Limpieza JLH</strong>
+        <span>Especificaciones técnicas</span>
+      </div>
+    </div>
+    <nav id="tocnav">
+      <a href="#resumen">1. Resumen del proyecto</a>
+      <a href="#arquitectura">2. Arquitectura general</a>
+      <a href="#plataformas">3. Plataformas y cuentas</a>
+      <a href="#archivos">4. Mapa de archivos</a>
+      <a href="#datos">5. Modelo de datos</a>
+      <a href="#sitio">6. El sitio público</a>
+      <a href="#admin">7. Panel de administración</a>
+      <a href="#flujo">8. Cómo fluye una actualización</a>
+      <a href="#hosting">9. Hosting, dominio y costos</a>
+      <a href="#seguridad">10. Seguridad y accesos</a>
+      <a href="#detalles">11. Detalles no obvios</a>
+      <a href="#historial">12. Archivos históricos</a>
+      <a href="#glosario">13. Glosario</a>
+    </nav>
+    <div class="meta">
+      Documento vivo — actualízalo cada vez que cambie algo estructural del proyecto (nueva plataforma, archivo nuevo, cambio de dominio).
+    </div>
+  </aside>
+
+  <main>
+    <header class="doc">
+      <div class="eyebrow">Documento de referencia · Servi Limpieza JLH</div>
+      <h1>Especificaciones técnicas del proyecto</h1>
+      <p class="lede">Todo lo que compone el sitio de Servi Limpieza JLH hoy: qué archivos existen, para qué sirve cada uno, en qué plataformas vive el proyecto, cómo se conectan entre sí, y cómo se actualiza el contenido sin tocar código.</p>
+      <div class="stamp">
+        <span>Última actualización: 25 de agosto de 2026</span>
+        <span>Dominio en vivo: servilimpiezajlh.com</span>
+        <span>Estado: en producción</span>
+      </div>
+    </header>
+
+    <section id="resumen">
+      <div class="num">01</div>
+      <h2>Resumen del proyecto</h2>
+      <p class="dek">Qué es este proyecto y para quién existe.</p>
+
+      <p><strong>Servi Limpieza JLH</strong> es una empresa de limpieza y lavado de muebles/tapetería a domicilio en Bogotá. Este proyecto es su <strong>sitio web comercial</strong>: una página pública que presenta los servicios, precios, cobertura y testimonios, con llamados a la acción para cotizar por WhatsApp.</p>
+
+      <p>El sitio se diseñó con un principio central: <strong>ningún cambio de contenido (fotos, precios, servicios, ciudades, testimonios) debería requerir un programador.</strong> Todo ese contenido vive en una hoja de Google Sheets, y se administra desde un panel visual (<code class="inline">admin.html</code>) hecho a la medida.</p>
+
+      <p>El sitio es <strong>estático</strong>: no tiene un servidor propio corriendo código. Es HTML/CSS/JavaScript que corre en el navegador del visitante, y ese código le pregunta a Google (vía Apps Script) qué contenido mostrar en cada visita.</p>
+    </section>
+
+    <section id="arquitectura">
+      <div class="num">02</div>
+      <h2>Arquitectura general</h2>
+      <div class="dek">Cuatro piezas que trabajan juntas, de lo que ve el visitante hacia donde vive realmente la información.</div>
+
+      <div class="flow">
+        <div class="box">
+          <div class="k">Capa 1 · Visitante</div>
+          <h4>Sitio público</h4>
+          <p><code class="inline">index.html</code> — lo que ve cualquier persona en <code class="inline">servilimpiezajlh.com</code>.</p>
+        </div>
+        <div class="arrow">→</div>
+        <div class="box">
+          <div class="k">Capa 2 · Lectura de datos</div>
+          <h4>Apps Script (doGet)</h4>
+          <p>Entrega en JSON el contenido activo de la hoja, vía <code class="inline">js/content-loader.js</code>.</p>
+        </div>
+        <div class="arrow">→</div>
+        <div class="box">
+          <div class="k">Capa 3 · Base de datos real</div>
+          <h4>Google Sheets + Drive</h4>
+          <p>Las hojas de cálculo y los archivos multimedia. Aquí vive de verdad la información.</p>
+        </div>
+      </div>
+
+      <div class="flow">
+        <div class="box">
+          <div class="k">Capa 0 · Administración</div>
+          <h4>admin.html</h4>
+          <p>Panel con clave, para agregar/editar/borrar contenido sin tocar código.</p>
+        </div>
+        <div class="arrow">→</div>
+        <div class="box">
+          <div class="k">Escritura de datos</div>
+          <h4>Apps Script (doPost)</h4>
+          <p>Recibe los cambios del panel y los guarda en la hoja/Drive.</p>
+        </div>
+        <div class="arrow">→</div>
+        <div class="box">
+          <div class="k">Resultado</div>
+          <h4>Vuelve a la Capa 3</h4>
+          <p>El cambio queda guardado y el sitio público lo mostrará en su próxima carga.</p>
+        </div>
+      </div>
+
+      <div class="callout ok">
+        <span class="tag">Diseño a prueba de fallos</span>
+        <p>Si Google no responde (caída, internet lento, hoja vacía), <code class="inline">content-loader.js</code> nunca rompe la página: el sitio sigue mostrando el contenido de respaldo que ya trae escrito en <code class="inline">index.html</code>, en silencio.</p>
+      </div>
+
+      <p>Por fuera de estas cuatro capas hay una quinta pieza: <strong>el hospedaje</strong> (dónde vive <code class="inline">index.html</code> para que cualquiera en internet lo pueda abrir). Ver sección 9.</p>
+    </section>
+
+    <section id="plataformas">
+      <div class="num">03</div>
+      <h2>Plataformas y cuentas involucradas</h2>
+      <div class="dek">Cada servicio externo del que depende el proyecto, y para qué se usa exactamente.</div>
+
+      <div class="platforms">
+        <div class="platform">
+          <h4><span class="pill github">GitHub</span></h4>
+          <div class="role">Control de versiones</div>
+          <p>Guarda el historial del código. Repositorio: <code class="inline">willysof23-svg/servilimpieza-jlh</code> (público).</p>
+        </div>
+        <div class="platform">
+          <h4><span class="pill netlify">Netlify</span></h4>
+          <div class="role">Hospedaje del sitio</div>
+          <p>Publica <code class="inline">index.html</code> y <code class="inline">admin.html</code> en internet. Conectado a GitHub: cada cambio subido se publica solo. Costo: $0/mes.</p>
+        </div>
+        <div class="platform">
+          <h4><span class="pill host">Hostinger</span></h4>
+          <div class="role">Registrador del dominio</div>
+          <p>Ahí se compró y se renueva <code class="inline">servilimpiezajlh.com</code>. Ya no hospeda el sitio — solo administra el nombre de dominio y su DNS, que apunta a Netlify.</p>
+        </div>
+        <div class="platform">
+          <h4><span class="pill google">Google Sheets</span></h4>
+          <div class="role">Base de datos</div>
+          <p>Hoja de cálculo <strong>"JLH CMS DB"</strong> con 6 pestañas: Media, Servicios, Precios, Ciudades, Testimonios, Config. Es la fuente de verdad del contenido.</p>
+        </div>
+        <div class="platform">
+          <h4><span class="pill google">Google Apps Script</span></h4>
+          <div class="role">Backend / API</div>
+          <p>El "programa" pegado dentro de la hoja de cálculo. Expone un enlace público (Web App) que el sitio consulta para leer y escribir datos.</p>
+        </div>
+        <div class="platform">
+          <h4><span class="pill drive">Google Drive</span></h4>
+          <div class="role">Almacenamiento de archivos</div>
+          <p>Carpeta <strong>"JLH_CMS_Media"</strong>: guarda las fotos, video y PDF reales que se suben desde <code class="inline">admin.html</code>.</p>
+        </div>
+        <div class="platform">
+          <h4><span class="pill wa">WhatsApp Business</span></h4>
+          <div class="role">Canal de contacto</div>
+          <p>Todos los botones de cotización abren un chat de WhatsApp (<code class="inline">wa.me</code>) al número configurado en la hoja Config.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="archivos">
+      <div class="num">04</div>
+      <h2>Mapa completo de archivos</h2>
+      <div class="dek">Todo lo que existe en la carpeta del proyecto (<code class="inline">C:\Users\willy\Downloads\JLHweb</code>) y para qué sirve cada cosa.</div>
+
+      <div class="tree">
+<span class="d">JLHweb/</span>
+├── <span class="f">index.html</span>              <span class="c">el sitio público — lo que ve el visitante</span>
+├── <span class="f">admin.html</span>              <span class="c">panel de administración (protegido con clave)</span>
+├── <span class="f">asset-manifest.json</span>     <span class="c">inventario técnico de los assets originales (no se edita a mano)</span>
+├── <span class="d">assets/</span>
+│&nbsp;&nbsp; ├── <span class="d">images/</span>              <span class="c">fotos de respaldo (img-01…img-06 + fotos "premium")</span>
+│&nbsp;&nbsp; └── <span class="d">fonts/</span>               <span class="c">tipografías del sitio, empaquetadas localmente</span>
+├── <span class="d">js/</span>
+│&nbsp;&nbsp; ├── <span class="f">content-loader.js</span>    <span class="c">trae el contenido desde Google y arma la Galería</span>
+│&nbsp;&nbsp; ├── <span class="f">dc-runtime.js</span>        <span class="c">motor que dibuja/anima la página (React empaquetado)</span>
+│&nbsp;&nbsp; └── <span class="d">vendor/</span>              <span class="c">React y React-DOM (librerías de terceros)</span>
+├── <span class="d">backend/</span>
+│&nbsp;&nbsp; ├── <span class="f">Code.gs</span>               <span class="c">copia de referencia del backend (vive de verdad en Google)</span>
+│&nbsp;&nbsp; └── <span class="f">README.md</span>             <span class="c">guía paso a paso para instalar el backend desde cero</span>
+├── <span class="d">_backup_pre_premium/</span>    <span class="c">respaldo del sitio antes del rediseño de julio 2026</span>
+├── <span class="f">Informe_Desarrollo_Servi_Limpieza_JLH.pdf</span>  <span class="c">informe narrativo del rediseño "premium" (jul. 2026)</span>
+├── <span class="f">ESPECIFICACIONES_TECNICAS_JLH.html</span>  <span class="c">este documento</span>
+├── <span class="f">colores_logo_jhl.png</span>    <span class="c">material de marca sin usar aún en el sitio</span>
+├── <span class="f">jlhcampaña2.mp4</span>         <span class="c">video crudo, pendiente de subir a Drive/Galería</span>
+├── <span class="f">jlhantesydespvarios.jpg</span> <span class="c">foto cruda, pendiente de subir a Drive/Galería</span>
+├── <span class="f">jlhgatoyperrito.jpg</span>      <span class="c">foto cruda, pendiente de subir a Drive/Galería</span>
+├── <span class="f">CLAUDE.md</span>               <span class="c">reglas del proyecto para asistentes de IA</span>
+└── <span class="d">.claude/</span>                <span class="c">config. del asistente (launch.json = servidor local de pruebas)</span>
+      </div>
+
+      <div class="callout warn">
+        <span class="tag">Pendiente</span>
+        <p><code class="inline">colores_logo_jhl.png</code>, <code class="inline">jlhcampaña2.mp4</code>, <code class="inline">jlhantesydespvarios.jpg</code> y <code class="inline">jlhgatoyperrito.jpg</code> son archivos de material entregado que todavía no están conectados al sitio — hay que subirlos a la carpeta de Drive <code class="inline">JLH_CMS_Media</code> (sección correspondiente, ej. <code class="inline">galeria</code>) desde <code class="inline">admin.html</code> para que aparezcan en vivo.</p>
+      </div>
+
+      <h3>Detalle de los archivos clave</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Archivo</th><th>Qué es</th><th>Quién lo toca normalmente</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">index.html</td><td>Página pública completa: estructura, estilos y el motor que la anima. Contiene también el contenido "de respaldo" (por si Google no responde).</td><td>Solo un desarrollador (cambios de diseño/estructura)</td></tr>
+            <tr><td class="mono">admin.html</td><td>Panel visual con 6 pestañas (Media, Servicios, Precios, Ciudades, Testimonios, Config) para editar el contenido real.</td><td>El usuario, día a día</td></tr>
+            <tr><td class="mono">js/content-loader.js</td><td>Pide el JSON al backend, lo guarda en <code class="inline">window.__CMS_DATA__</code> y construye a mano la sección Galería.</td><td>Un desarrollador</td></tr>
+            <tr><td class="mono">js/dc-runtime.js</td><td>Framework de renderizado (basado en React) que dibuja todas las secciones animadas del sitio a partir de los datos.</td><td>Un desarrollador</td></tr>
+            <tr><td class="mono">backend/Code.gs</td><td>Copia de referencia del backend. El que realmente corre está pegado dentro de la hoja de Google Sheets.</td><td>Un desarrollador (y luego se sincroniza a mano en Apps Script)</td></tr>
+            <tr><td class="mono">backend/README.md</td><td>Instrucciones completas para instalar el backend desde cero en una hoja nueva, si algún día hace falta.</td><td>Referencia, uso ocasional</td></tr>
+            <tr><td class="mono">_backup_pre_premium/</td><td>Copia del sitio tal como estaba antes del rediseño "premium" de julio 2026, por si hay que comparar o rescatar algo viejo.</td><td>Nadie — solo archivo histórico</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="datos">
+      <div class="num">05</div>
+      <h2>Modelo de datos</h2>
+      <div class="dek">Las 6 pestañas de la hoja de cálculo "JLH CMS DB" — la base de datos real del sitio.</div>
+
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Hoja</th><th>Columnas</th><th>Para qué sirve</th></tr></thead>
+          <tbody>
+            <tr><td>Media</td><td class="mono">id, seccion, tipo, nombre, url, alt_text, orden, activo, fecha_actualizacion</td><td>Cada fila es una foto, video o PDF. <code class="inline">seccion</code> dice en qué parte del sitio aparece (ej. <code class="inline">logo</code>, <code class="inline">cobertura</code>, <code class="inline">galeria</code>).</td></tr>
+            <tr><td>Servicios</td><td class="mono">id, icon, title, desc, price, orden, activo</td><td>Las tarjetas de la sección "Servicios".</td></tr>
+            <tr><td>Precios</td><td class="mono">id, icon, title, desc1, desc2, price, orden, activo</td><td>Las tarjetas de la sección "Precios".</td></tr>
+            <tr><td>Ciudades</td><td class="mono">id, nombre, orden, activo</td><td>Lista de ciudades cubiertas (sección "Cobertura").</td></tr>
+            <tr><td>Testimonios</td><td class="mono">id, quote, author, orden, activo</td><td>El carrusel de testimonios de clientes.</td></tr>
+            <tr><td>Config</td><td class="mono">key, value</td><td>Valores sueltos: número de WhatsApp, texto del banner promocional, etc.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>En todas las hojas de texto, la columna <code class="inline">activo</code> decide si esa fila se usa o no (<code class="inline">doGet</code> filtra por <code class="inline">activo === true</code>), y <code class="inline">orden</code> decide en qué posición aparece.</p>
+
+      <h3>Secciones "de un solo cupo" en Media</h3>
+      <p>La mayoría de <code class="inline">seccion</code> en Media (logo, cobertura, los 3 hero, los 3 "Quiénes Somos", los 3 "Compromiso", los 2 sliders antes/después) muestran <strong>una sola imagen a la vez</strong>: la fila activa con el <code class="inline">orden</code> más bajo. La única excepción es <code class="inline">galeria</code>, donde sí pueden convivir muchas filas activas — todas se muestran juntas.</p>
+    </section>
+
+    <section id="sitio">
+      <div class="num">06</div>
+      <h2>El sitio público — sección por sección</h2>
+      <div class="dek">Todo lo que un visitante encuentra al entrar a servilimpiezajlh.com, en orden.</div>
+
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Sección</th><th>Qué muestra</th><th>De dónde saca el contenido</th></tr></thead>
+          <tbody>
+            <tr><td>Banner promocional</td><td>Cinta superior con la promoción vigente, en movimiento continuo.</td><td>Config → <code class="inline">marquee_texto</code> (o texto fijo de respaldo)</td></tr>
+            <tr><td>Encabezado (Hero)</td><td>Logo, título, fondo con 3 fotos rotando, contadores animados (garantía, ciudades), botón WhatsApp.</td><td>Media (<code class="inline">logo</code>, <code class="inline">hero-1/2/3</code>) + Config</td></tr>
+            <tr><td>Barra de confianza</td><td>Garantía, ciudades cubiertas, respuesta inmediata, tecnología — franja fija bajo el encabezado.</td><td>Texto fijo + conteo de Ciudades</td></tr>
+            <tr><td>Servicios</td><td>Tarjetas con ícono, nombre, descripción y precio de cada servicio.</td><td>Hoja Servicios</td></tr>
+            <tr><td>Resultados (antes/después)</td><td>2 comparadores deslizables: sofá y sillas.</td><td>Media (<code class="inline">resultados-1/2-antes/despues</code>)</td></tr>
+            <tr><td>Quiénes Somos</td><td>Trayectoria de la empresa, equipo propio, 3 fotos.</td><td>Texto fijo + Media (<code class="inline">quienes-somos-*</code>)</td></tr>
+            <tr><td>Calidad, Seguridad y Sostenibilidad</td><td>3 pilares: trazabilidad, eco-friendly, bienestar familiar.</td><td>Texto fijo + Media (<code class="inline">compromiso-*</code>)</td></tr>
+            <tr><td>Precios</td><td>Tarjetas de paquetes con precio y detalle.</td><td>Hoja Precios</td></tr>
+            <tr><td>Tan Fácil Como 1, 2, 3</td><td>Explica el proceso de agendamiento.</td><td>Texto fijo</td></tr>
+            <tr><td>Testimonios</td><td>Carrusel con iniciales en círculo de color; deslizable en celular.</td><td>Hoja Testimonios</td></tr>
+            <tr><td>Cobertura</td><td>Ciudades atendidas + foto del equipo en ruta.</td><td>Hoja Ciudades + Media (<code class="inline">cobertura</code>)</td></tr>
+            <tr><td>Galería de Trabajos</td><td>Cuadrícula de fotos/video/PDF adicionales.</td><td>Media, filas con <code class="inline">seccion = galeria</code></td></tr>
+            <tr><td>CTA final + pie de página</td><td>Llamado final a agendar, datos de contacto.</td><td>Texto fijo + Config (WhatsApp)</td></tr>
+            <tr><td>Botón flotante WhatsApp</td><td>Burbuja fija esquina inferior (PC) / barra fija inferior (celular).</td><td>Config (WhatsApp)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Todo el sitio es <strong>responsive</strong>: se adapta a computador, tablet y celular (menús, sliders y galería se comportan distinto según el ancho de pantalla).</p>
+    </section>
+
+    <section id="admin">
+      <div class="num">07</div>
+      <h2>Panel de administración — admin.html</h2>
+      <div class="dek">La herramienta de autoservicio: agregar, editar o borrar contenido sin tocar código.</div>
+
+      <p>Se abre con doble clic sobre <code class="inline">admin.html</code>, o desde <code class="inline">servilimpiezajlh.com/admin.html</code> en internet. Pide una <strong>clave de administrador</strong> antes de mostrar nada.</p>
+
+      <h3>Las 6 pestañas</h3>
+      <ul>
+        <li><strong>Imágenes / Video / PDF</strong> — subir un archivo nuevo (sube a Drive y crea la fila en Sheets en un solo paso), activar/desactivar, reordenar o eliminar.</li>
+        <li><strong>Servicios</strong> — tabla editable: ícono, nombre, descripción, precio, orden, activo.</li>
+        <li><strong>Precios</strong> — igual que Servicios, con dos líneas de descripción.</li>
+        <li><strong>Ciudades</strong> — nombre de cada ciudad cubierta.</li>
+        <li><strong>Testimonios</strong> — cita y autor de cada testimonio.</li>
+        <li><strong>Configuración</strong> — valores sueltos como el número de WhatsApp o el texto del banner.</li>
+      </ul>
+
+      <div class="callout warn">
+        <span class="tag">Importante</span>
+        <p>Eliminar una fila en <code class="inline">admin.html</code> <strong>no borra el archivo de Google Drive</strong>, solo la fila en Sheets. El archivo queda huérfano en Drive; hay que borrarlo ahí manualmente si se quiere liberar espacio.</p>
+      </div>
+    </section>
+
+    <section id="flujo">
+      <div class="num">08</div>
+      <h2>Cómo fluye una actualización de contenido</h2>
+      <div class="dek">Ejemplo real: cambiar el precio de un servicio.</div>
+
+      <ol>
+        <li>Willy entra a <code class="inline">admin.html</code>, escribe la clave, va a la pestaña <strong>Precios</strong>.</li>
+        <li>Edita el campo de precio de una tarjeta y da clic en <strong>Guardar</strong>.</li>
+        <li><code class="inline">admin.html</code> envía ese cambio al Apps Script (<code class="inline">doPost</code>, acción <code class="inline">upsert</code>), junto con el token de administrador.</li>
+        <li>Apps Script escribe el nuevo valor directamente en la fila correspondiente de la hoja <strong>Precios</strong>.</li>
+        <li>La próxima vez que alguien abra <code class="inline">servilimpiezajlh.com</code>, <code class="inline">content-loader.js</code> pide el contenido actualizado (<code class="inline">doGet</code>) y el sitio se dibuja con el precio nuevo.</li>
+      </ol>
+
+      <p>No hay "publicar" ni "subir a producción": el cambio queda visible en el sitio en la siguiente carga de página, normalmente en segundos.</p>
+    </section>
+
+    <section id="hosting">
+      <div class="num">09</div>
+      <h2>Hosting, dominio y costos</h2>
+      <div class="dek">Dónde vive el sitio en internet, y cuánto cuesta mantenerlo.</div>
+
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Concepto</th><th>Detalle</th></tr></thead>
+          <tbody>
+            <tr><td>Hospedaje</td><td>Netlify, proyecto <code class="inline">servilimpieza-jlh</code>, plan gratuito</td></tr>
+            <tr><td>Despliegue</td><td>Automático desde GitHub — cada vez que se sube un cambio al repositorio, Netlify publica la nueva versión sola</td></tr>
+            <tr><td>Repositorio</td><td class="mono">github.com/willysof23-svg/servilimpieza-jlh</td></tr>
+            <tr><td>URL técnica (siempre disponible)</td><td class="mono">servilimpieza-jlh.netlify.app</td></tr>
+            <tr><td>Dominio comercial</td><td class="mono">servilimpiezajlh.com</td> </tr>
+            <tr><td>Registrador del dominio</td><td>Hostinger — vence 27 de mayo de 2027. <strong>Auto-renovación apagada</strong>, revisar antes de esa fecha.</td></tr>
+            <tr><td>Seguridad (HTTPS)</td><td>Certificado automático de Netlify (Let's Encrypt) — se renueva solo</td></tr>
+            <tr><td>Costo mensual total</td><td><strong>$0 COP</strong> (solo aplica el costo anual de renovación del dominio en Hostinger)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Configuración DNS en Hostinger (registros que apuntan el dominio hacia Netlify):</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>Nombre</th><th>Apunta a</th></tr></thead>
+          <tbody>
+            <tr><td>ALIAS</td><td class="mono">@</td><td class="mono">apex-loadbalancer.netlify.com</td></tr>
+            <tr><td>CNAME</td><td class="mono">www</td><td class="mono">servilimpieza-jlh.netlify.app</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="seguridad">
+      <div class="num">10</div>
+      <h2>Seguridad y accesos</h2>
+      <div class="dek">Quién puede cambiar qué, y qué hay que cuidar.</div>
+
+      <ul>
+        <li><strong>Clave de administrador (token):</strong> protege <code class="inline">admin.html</code>. Se configura desde el menú "🧹 JLH Admin" dentro de la hoja de Sheets, no está escrita en ningún archivo de código. Nunca compartirla fuera de quien administre el contenido.</li>
+        <li><strong>Repositorio de GitHub público:</strong> el código es visible para cualquiera, incluida la URL del backend de Apps Script — pero esa URL solo permite <em>leer</em> contenido activo (<code class="inline">doGet</code>) sin clave; <em>escribir</em> (<code class="inline">doPost</code>) siempre exige el token de administrador.</li>
+        <li><strong>Cuenta de Netlify y GitHub:</strong> de Willy (<code class="inline">willysof23@gmail.com</code> / usuario <code class="inline">willysof23-svg</code>). Ahí se controla quién puede desplegar cambios o tocar el dominio.</li>
+        <li><strong>Cuenta de Hostinger:</strong> de Willy. Controla el dominio y su DNS.</li>
+        <li><strong>Cuenta de Google (Sheets/Drive/Apps Script):</strong> dueña real de todo el contenido. Quien tenga acceso a esa cuenta de Google puede editar todo directamente en la hoja, sin pasar por <code class="inline">admin.html</code>.</li>
+      </ul>
+    </section>
+
+    <section id="detalles">
+      <div class="num">11</div>
+      <h2>Detalles técnicos no obvios</h2>
+      <div class="dek">Cosas que no son evidentes a simple vista, pero que cambian el comportamiento del sitio.</div>
+
+      <div class="callout warn">
+        <span class="tag">Al reemplazar una foto "de un solo cupo"</span>
+        <p>Subir una foto nueva por <code class="inline">admin.html</code> le asigna automáticamente <code class="inline">orden: 999</code>. Si la fila vieja de esa misma sección sigue <strong>activa</strong> con un <code class="inline">orden</code> más bajo, seguirá ganando ella, no la nueva. Hay que desactivar o eliminar la fila vieja después de subir la nueva.</p>
+      </div>
+
+      <div class="callout warn">
+        <span class="tag">Al editar el backend</span>
+        <p>Cada vez que se modifica <code class="inline">Code.gs</code> directamente en el editor de Apps Script (dentro de la Hoja), hay que crear una <strong>nueva versión del despliegue</strong> (Desplegar → Gestionar implementaciones → editar → Versión: Nueva → Implementar). Editar el código sin hacer esto no tiene ningún efecto en el sitio en vivo.</p>
+      </div>
+
+      <div class="callout warn">
+        <span class="tag">Video en la Galería</span>
+        <p>Google bloquea que su visor de video se incruste dentro de un sitio externo. Por eso los videos de la Galería abren en una pestaña nueva en vez de reproducirse directamente en la página.</p>
+      </div>
+
+      <div class="callout warn">
+        <span class="tag">Sección Galería, técnicamente</span>
+        <p>La Galería se construye por fuera del motor de animación del sitio (<code class="inline">dc-runtime.js</code>) y se posiciona calculando a mano dónde termina el contenido real, porque ese motor tiene una caja de altura fija que no refleja el largo real de la página. Un <code class="inline">MutationObserver</code> la vigila y la vuelve a insertar si el motor la llega a borrar en uno de sus repintados.</p>
+      </div>
+    </section>
+
+    <section id="historial">
+      <div class="num">12</div>
+      <h2>Archivos históricos</h2>
+      <div class="dek">Material que no es parte del sitio en vivo, pero se conserva como referencia.</div>
+
+      <ul>
+        <li><strong><code class="inline">_backup_pre_premium/</code></strong> — copia completa de <code class="inline">index.html</code>, <code class="inline">content-loader.js</code> y el logo, tal como estaban antes del rediseño "premium" de julio de 2026. Incluye también los scripts Python usados en ese momento para preparar el logo y subir medios en lote.</li>
+        <li><strong><code class="inline">Informe_Desarrollo_Servi_Limpieza_JLH.pdf</code></strong> — informe narrativo (no técnico) de julio de 2026 que resume ese mismo rediseño: qué cambió visualmente, qué fotos nuevas se incorporaron y por qué. Complementa a este documento, no lo reemplaza.</li>
+      </ul>
+    </section>
+
+    <section id="glosario">
+      <div class="num">13</div>
+      <h2>Glosario rápido</h2>
+      <div class="dek">Términos técnicos usados arriba, explicados en simple.</div>
+
+      <details class="gloss"><summary>Sitio estático</summary><p>Un sitio web hecho solo de archivos (HTML/CSS/JS) que no necesita un servidor propio ejecutando programas — cualquier servicio de hospedaje simple lo puede mostrar.</p></details>
+      <details class="gloss"><summary>Google Apps Script</summary><p>Un lenguaje de programación de Google que se pega directamente dentro de una hoja de cálculo y puede exponerse como una dirección web pública (Web App) que otros programas pueden consultar.</p></details>
+      <details class="gloss"><summary>doGet / doPost</summary><p>Las dos "puertas" del backend: <code class="inline">doGet</code> es para leer datos (lo usa el sitio público, sin clave), <code class="inline">doPost</code> es para escribir/cambiar datos (lo usa admin.html, siempre con clave).</p></details>
+      <details class="gloss"><summary>DNS</summary><p>El "directorio telefónico" de internet: traduce un nombre de dominio (servilimpiezajlh.com) a la dirección técnica real del servidor donde vive el sitio (en este caso, Netlify).</p></details>
+      <details class="gloss"><summary>Despliegue continuo (CI/CD)</summary><p>Que el sitio se actualice solo en internet cada vez que se sube un cambio al repositorio de GitHub, sin tener que subir archivos a mano.</p></details>
+      <details class="gloss"><summary>Repositorio (repo)</summary><p>La carpeta del proyecto con todo su historial de cambios, guardada en GitHub.</p></details>
+      <details class="gloss"><summary>Token / clave de administrador</summary><p>Una contraseña propia del sitio (distinta de la de Google o Netlify) que protege quién puede editar contenido desde admin.html.</p></details>
+
+      <footer class="doc">
+        Documento generado como parte del mantenimiento del proyecto Servi Limpieza JLH. Mantenlo actualizado cada vez que cambie algo estructural: un archivo nuevo, una plataforma nueva, un cambio de dominio o de hosting.
+      </footer>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('#tocnav a'));
+    var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var idx = sections.indexOf(entry.target);
+        if (idx === -1) return;
+        if (entry.isIntersecting){
+          links.forEach(function(l){ l.classList.remove('active'); });
+          links[idx].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px', threshold: 0 });
+    sections.forEach(function(s){ if (s) io.observe(s); });
+  })();
+</script>
