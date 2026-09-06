@@ -76,8 +76,8 @@
     // desborda visualmente sin agrandar esa caja. Si esta sección se agrega
     // en flujo normal, el navegador la ubica justo después de esa caja de
     // ~1 pantalla, no después del contenido real, quedando encimada a mitad
-    // de página. posicionarGaleriaJLH_() calcula la coordenada real donde
-    // termina el contenido y la aplica aquí.
+    // de página. posicionarGaleriaJLH_() calcula la coordenada real (justo
+    // antes del pie de página) y la aplica aquí.
     section.style.cssText = 'position:absolute;left:0;width:100%;padding:96px 6%;background:#f0f4ff;';
 
     const header = document.createElement('div');
@@ -140,20 +140,38 @@
 
   /**
    * posicionarGaleriaJLH_ — calcula la coordenada Y real (del documento) donde
-   * termina el contenido de #dc-root (usando su scrollHeight, que sí refleja
-   * el contenido desbordado aunque la caja del elemento sea más chica) y
-   * ubica ahí la sección de Galería. Sin esto, la sección quedaría encimada
-   * sobre "Servicios" en vez de al final de la página (ver comentario en
-   * renderGaleria_). Recibe: section (el <section id="galeria-jlh"> ya
-   * creado). Retorna: nada. Llamada por: renderGaleria_() y protegerGaleria_()
-   * (al reinsertar, o cuando cambia el tamaño del contenido/ventana).
+   * debe empezar la sección de Galería y ubica ahí el <section>. Sin esto, la
+   * sección quedaría encimada sobre "Servicios" en vez de al final de la
+   * página (ver comentario en renderGaleria_).
+   *
+   * Se ubica justo donde empieza el <footer> (no al final de todo #dc-root),
+   * y luego se empuja el <footer> hacia abajo con margin-top para que quede
+   * DESPUÉS de la Galería. Así el orden visual queda: ...Cobertura → Galería
+   * → pie de página, que es el orden real del sitio (ver
+   * ESPECIFICACIONES_TECNICAS_JLH.html, sección 6). Antes de este ajuste, la
+   * Galería se colocaba después de #dc-root completo (footer incluido), y un
+   * visitante veía el pie de página ANTES de llegar a la Galería.
+   *
+   * Recibe: section (el <section id="galeria-jlh"> ya creado). Retorna: nada.
+   * Llamada por: renderGaleria_() y protegerGaleria_() (al reinsertar, o
+   * cuando cambia el tamaño del contenido/ventana).
    */
   function posicionarGaleriaJLH_(section) {
     const raiz = document.getElementById('dc-root') || document.body.firstElementChild;
     if (!raiz || raiz === section) return;
-    const rect = raiz.getBoundingClientRect();
-    const topDocumento = rect.top + window.scrollY + raiz.scrollHeight;
-    section.style.top = topDocumento + 'px';
+    const footer = raiz.querySelector('footer');
+    if (footer) {
+      // Se resetea antes de medir para no acumular el empujón de una llamada anterior.
+      footer.style.marginTop = '0px';
+      const topDocumento = footer.getBoundingClientRect().top + window.scrollY;
+      section.style.top = topDocumento + 'px';
+      footer.style.marginTop = section.offsetHeight + 'px';
+    } else {
+      // Respaldo si no se encuentra el pie de página: comportamiento original
+      // (al final de todo el contenido de #dc-root).
+      const rect = raiz.getBoundingClientRect();
+      section.style.top = (rect.top + window.scrollY + raiz.scrollHeight) + 'px';
+    }
   }
 
   /**

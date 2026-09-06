@@ -402,6 +402,22 @@
      verdad, no como atributos inline. */
   .nav-link { transition:color 0.25s; }
   .nav-link:hover { color:#00e676 !important; }
+  /* Menú móvil: en pantallas angostas los enlaces se ocultan y aparece el
+     botón hamburguesa (#navToggle); al hacer clic se agrega la clase "open"
+     tanto al botón como al contenedor de enlaces (ver componentDidMount). */
+  .nav-links-wrap { display:flex; gap:22px; align-items:center; flex-wrap:wrap; }
+  .nav-toggle-btn { display:none; }
+  @media (max-width:860px) {
+    .nav-toggle-btn { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; width:42px; height:42px; border-radius:8px; background:rgba(255,255,255,0.12); border:none; cursor:pointer; flex:none; }
+    .nav-toggle-btn .bar { display:block; width:22px; height:2px; background:#cfe8ff; border-radius:2px; transition:transform 0.25s,opacity 0.25s; }
+    .nav-toggle-btn.open .bar:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .nav-toggle-btn.open .bar:nth-child(2) { opacity:0; }
+    .nav-toggle-btn.open .bar:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+    .nav-links-wrap { display:none; position:absolute; top:100%; left:0; right:0; flex-direction:column; align-items:stretch; gap:0; background:rgba(15,28,74,0.98); padding:6px 6% 18px; box-shadow:0 14px 28px rgba(0,0,0,0.32); }
+    .nav-links-wrap.open { display:flex; }
+    .nav-links-wrap .nav-link { padding:13px 0; border-bottom:1px solid rgba(255,255,255,0.1); }
+    .nav-links-wrap .btn-whatsapp { margin-top:12px; justify-content:center; }
+  }
   .btn-whatsapp { transition:transform 0.2s,box-shadow 0.2s; }
   .btn-whatsapp:hover { transform:translateY(-4px) scale(1.02); box-shadow:0 16px 38px rgba(37,211,102,0.6); }
   .btn-outline:hover { background:rgba(255,255,255,0.12); border-color:white; transform:translateY(-2px); }
@@ -425,7 +441,6 @@
     .fab-whatsapp { display:none !important; }
     .sticky-cta-mobile { display:flex; }
     body { padding-bottom:58px; } /* deja espacio para que la barra fija no tape el pie de página */
-    .promo-banner { margin-top:172px !important; } /* en móvil el menú ocupa varias filas y es más alto */
   }
   @media (max-width:860px) {
     .two-col-grid { grid-template-columns:1fr !important; }
@@ -444,7 +459,12 @@
 
   <nav id="mainNav" style="position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(26,46,110,0.85);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:10px 6%;box-shadow:0 2px 24px rgba(0,0,0,0.25);flex-wrap:wrap;gap:10px;transition:padding 0.3s,background 0.3s;">
     <img src="{{ logoUrl }}" alt="Servi Limpieza JLH" style="height:56px;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.35));">
-    <div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap;">
+    <button id="navToggle" class="nav-toggle-btn" type="button" aria-label="Abrir menú" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <div id="navLinksWrap" class="nav-links-wrap">
       <a href="#servicios" class="nav-link" style="color:#cfe8ff;text-decoration:none;font-weight:700;font-size:0.9rem;position:relative;">Servicios</a>
       <a href="#resultados" class="nav-link" style="color:#cfe8ff;text-decoration:none;font-weight:700;font-size:0.9rem;">Resultados</a>
       <a href="#galeria-jlh" class="nav-link" style="color:#cfe8ff;text-decoration:none;font-weight:700;font-size:0.9rem;">Galería</a>
@@ -841,6 +861,27 @@ class Component extends DCLogic {
     this._onCmsData = () => this.setState({});
     window.addEventListener('cms:data-ready', this._onCmsData);
 
+    // Menú móvil: el botón hamburguesa (#navToggle) muestra/oculta el
+    // contenedor de enlaces (#navLinksWrap) agregando la clase "open" a
+    // ambos. Al tocar un enlace del menú se cierra solo, para no tapar la
+    // sección a la que el visitante quiere ir.
+    const navToggleEl = root.querySelector('#navToggle');
+    const navLinksEl = root.querySelector('#navLinksWrap');
+    if (navToggleEl && navLinksEl) {
+      this._onNavToggle = () => {
+        const isOpen = navLinksEl.classList.toggle('open');
+        navToggleEl.classList.toggle('open', isOpen);
+        navToggleEl.setAttribute('aria-expanded', String(isOpen));
+      };
+      navToggleEl.addEventListener('click', this._onNavToggle);
+      this._onNavLinkClick = () => {
+        navLinksEl.classList.remove('open');
+        navToggleEl.classList.remove('open');
+        navToggleEl.setAttribute('aria-expanded', 'false');
+      };
+      navLinksEl.querySelectorAll('a').forEach((a) => a.addEventListener('click', this._onNavLinkClick));
+    }
+
     // Scroll progress bar + nav shrink
     const progressEl = root.querySelector('#scrollProgress');
     const navEl = root.querySelector('#mainNav');
@@ -1039,6 +1080,12 @@ class Component extends DCLogic {
       }
       const backToTopEl = root.querySelector('#backToTop');
       if (backToTopEl && this._onBackToTop) backToTopEl.removeEventListener('click', this._onBackToTop);
+      const navToggleEl = root.querySelector('#navToggle');
+      if (navToggleEl && this._onNavToggle) navToggleEl.removeEventListener('click', this._onNavToggle);
+      const navLinksEl = root.querySelector('#navLinksWrap');
+      if (navLinksEl && this._onNavLinkClick) {
+        navLinksEl.querySelectorAll('a').forEach((a) => a.removeEventListener('click', this._onNavLinkClick));
+      }
     }
   }
 
