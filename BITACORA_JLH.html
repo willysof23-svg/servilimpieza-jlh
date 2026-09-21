@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitácora del proyecto | ServiLimpieza JLH</title>
+<meta name="robots" content="noindex, nofollow"><!-- documento interno: que Google no lo liste -->
+
+<style>
+  /*
+   * BITÁCORA — ServiLimpieza JLH
+   * Qué es: registro vivo de lo que se hace en el sitio y del estado actual, escrito para Willy (lenguaje simple).
+   * Cómo se mantiene: cada acción nueva se agrega como un bloque <article class="entrada"> al PRINCIPIO de la
+   *   sección "Historial" (lo más nuevo arriba), y se actualiza el cuadro "Estado actual" de arriba.
+   * Es un documento independiente: no lo usa el sitio web ni lo carga ninguna otra página.
+   */
+  :root { --navy:#1a2e6e; --azul:#1e88e5; --texto:#4a5578; --fondo:#f2f7fd; --card:#fff; --linea:#dbe6f3;
+          --ok:#0e7a4a; --ok-bg:#dcf5e8; --warn:#8a5a00; --warn-bg:#fff1cf; --off:#7a2a2a; --off-bg:#fbe3e3; }
+  @media (prefers-color-scheme:dark) {
+    :root { --navy:#dbe6ff; --azul:#6db3ff; --texto:#b3bfdc; --fondo:#0f1730; --card:#172244; --linea:#2a3a6b;
+            --ok:#7fe0b0; --ok-bg:#12382a; --warn:#ffd27a; --warn-bg:#3b2f0e; --off:#ffb0b0; --off-bg:#3d1c1c; }
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif; background:var(--fondo); color:var(--texto); line-height:1.6; padding:28px 16px 60px; }
+  .wrap { max-width:860px; margin:0 auto; }
+  header { margin-bottom:24px; }
+  header .marca { font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--azul); }
+  h1 { color:var(--navy); font-size:clamp(1.7rem,5vw,2.3rem); line-height:1.2; margin:6px 0; }
+  header p { max-width:60ch; }
+  h2 { color:var(--navy); font-size:1.25rem; margin:34px 0 14px; }
+  h3 { color:var(--navy); font-size:1.02rem; margin-bottom:6px; }
+  .card { background:var(--card); border:1px solid var(--linea); border-radius:16px; padding:20px 22px; margin-bottom:14px; }
+
+  /* Cuadro de estado actual */
+  .estado { border-left:6px solid #e0a100; }
+  .estado .fila { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:12px; }
+  .pill { display:inline-block; font-size:.78rem; font-weight:800; padding:5px 12px; border-radius:50px; }
+  .pill.warn { background:var(--warn-bg); color:var(--warn); }
+  .pill.ok { background:var(--ok-bg); color:var(--ok); }
+  .pill.off { background:var(--off-bg); color:var(--off); }
+  table { width:100%; border-collapse:collapse; font-size:.94rem; }
+  td, th { text-align:left; padding:9px 8px; border-top:1px solid var(--linea); vertical-align:top; }
+  th { width:34%; color:var(--navy); font-weight:700; }
+  code { font-family:Consolas,monospace; font-size:.86rem; background:var(--fondo); border:1px solid var(--linea); padding:1px 6px; border-radius:6px; word-break:break-all; }
+
+  /* Pasos numerados para volver a la normalidad */
+  ol.pasos { list-style:none; counter-reset:p; }
+  ol.pasos li { counter-increment:p; position:relative; padding:0 0 12px 42px; }
+  ol.pasos li::before { content:counter(p); position:absolute; left:0; top:0; width:28px; height:28px; border-radius:50%; background:var(--azul); color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:.85rem; }
+
+  /* Historial (línea de tiempo) */
+  .entrada { position:relative; margin-left:14px; padding:0 0 18px 22px; border-left:3px solid var(--linea); }
+  .entrada::before { content:""; position:absolute; left:-9px; top:4px; width:15px; height:15px; border-radius:50%; background:var(--azul); border:3px solid var(--fondo); }
+  .entrada .cuando { font-size:.8rem; font-weight:700; color:var(--azul); }
+  .entrada ul { margin:6px 0 0 18px; }
+  .entrada li { margin-bottom:3px; }
+  .nota { font-size:.9rem; }
+  footer { margin-top:34px; font-size:.82rem; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="marca">ServiLimpieza JLH</div>
+    <h1>Bitácora del proyecto</h1>
+    <p>Aquí queda anotado lo que se hizo en la página y cómo está hoy, para que nadie tenga que acordarse de memoria.</p>
+  </header>
+
+  <!-- ESTADO ACTUAL: actualizar este cuadro cada vez que cambie algo importante -->
+  <h2>Estado actual de la página</h2>
+  <section class="card estado" aria-label="Estado actual">
+    <div class="fila">
+      <span class="pill warn">EN MANTENIMIENTO</span>
+      <span>Desde el <strong>21 de septiembre de 2026</strong>. Decisión de Willy, temporal.</span>
+    </div>
+    <table>
+      <tr><th>Lo que ve el público</th><td>Solo un aviso: logo + "Estamos mejorando nuestro sitio". <strong>Sin</strong> número de contacto ni WhatsApp (así lo pidió Willy).</td></tr>
+      <tr><th>servilimpiezajlh.com</th><td><span class="pill warn">Muestra el aviso</span></td></tr>
+      <tr><th>servilimpieza-jlh.netlify.app</th><td><span class="pill warn">Muestra el aviso</span> (es el mismo sitio, otra dirección)</td></tr>
+      <tr><th>Panel de administración</th><td><span class="pill ok">Funcionando</span> — <code>servilimpiezajlh.com/admin.html</code>, con su clave de siempre.</td></tr>
+      <tr><th>Copia en GitHub Pages</th><td><span class="pill off">Apagada</span> — <code>willysof23-svg.github.io/servilimpieza-jlh/</code> ya no responde (404).</td></tr>
+      <tr><th>Datos, fotos y precios</th><td><span class="pill ok">Intactos</span> — Google Sheets y Drive no se tocaron. <code>index.html</code> tampoco se modificó.</td></tr>
+    </table>
+  </section>
+
+  <!-- CÓMO VOLVER A LA NORMALIDAD -->
+  <h2>Cómo volver a poner la página normal</h2>
+  <section class="card">
+    <p class="nota" style="margin-bottom:12px">Lo más simple es pedírselo a Claude. Si prefieres hacerlo tú, estos son los pasos.</p>
+    <ol class="pasos">
+      <li><h3>Quitar el aviso de mantenimiento</h3>
+        Decirle a Claude: <em>"quita el modo mantenimiento"</em>. Él borra el archivo <code>netlify.toml</code> y lo sube a GitHub. En 1 o 2 minutos Netlify vuelve a mostrar la página normal.
+        (<code>mantenimiento.html</code> puede quedarse guardado para otra vez; solo <code>netlify.toml</code> es el que activa el aviso.)</li>
+      <li><h3>Volver a encender la copia de GitHub (opcional)</h3>
+        Estaba activa antes; nadie la necesita para que el sitio funcione, porque la página real vive en Netlify. Si se quiere de vuelta: en GitHub, repositorio <code>servilimpieza-jlh</code> → <em>Settings</em> → <em>Pages</em> → Source: <em>Deploy from a branch</em> → rama <code>main</code>, carpeta <code>/ (root)</code>. O pedírselo a Claude.</li>
+      <li><h3>Comprobar</h3>
+        Abrir <code>servilimpiezajlh.com</code> en una ventana de incógnito y confirmar que se ve la página completa (galería, precios, botón de WhatsApp).</li>
+    </ol>
+  </section>
+
+  <!-- HISTORIAL: agregar entradas nuevas ARRIBA de las existentes -->
+  <h2>Historial</h2>
+
+  <article class="entrada">
+    <div class="cuando">21 sep 2026 · mantenimiento activado</div>
+    <h3>Se puso la página en mantenimiento</h3>
+    <ul>
+      <li>Willy pidió sacar la página de línea de forma provisional, mostrando un aviso.</li>
+      <li>Se creó <code>mantenimiento.html</code> (el aviso) y <code>netlify.toml</code> (la instrucción para Netlify de mostrar el aviso en la página principal). Ambos archivos son nuevos; <code>index.html</code> y <code>admin.html</code> no se cambiaron.</li>
+      <li>Primero el aviso incluía WhatsApp y número; Willy pidió quitarlos y se corrigió el mismo día.</li>
+      <li>Se probó en computador y celular antes de subirlo, y en internet después de publicarlo. Willy lo confirmó viendo <code>servilimpiezajlh.com</code>.</li>
+    </ul>
+  </article>
+
+  <article class="entrada">
+    <div class="cuando">21 sep 2026 · imprevisto resuelto</div>
+    <h3>La segunda publicación tardó en aparecer</h3>
+    <ul>
+      <li>Netlify siguió mostrando la primera versión del aviso (con WhatsApp) unos 10 minutos, aunque GitHub ya tenía la corrección.</li>
+      <li>Se volvió a enviar la orden de publicar y quedó bien. <strong>Lección:</strong> si un cambio no aparece en pocos minutos, se reenvía la publicación; no hace falta tocar el código.</li>
+    </ul>
+  </article>
+
+  <article class="entrada">
+    <div class="cuando">21 sep 2026 · hallazgo</div>
+    <h3>Se apagó una segunda copia pública del sitio en GitHub Pages</h3>
+    <ul>
+      <li>Se descubrió que GitHub también publicaba el sitio completo en <code>willysof23-svg.github.io/servilimpieza-jlh/</code> (configuración: rama <code>main</code>, carpeta raíz, HTTPS activo, sin dominio propio). Esto no estaba en las especificaciones técnicas.</li>
+      <li>Esa copia no obedece al aviso de mantenimiento, así que con autorización de Willy se apagó. Se verificó que la dirección ahora responde "Site not found".</li>
+      <li>El sitio real (Netlify) no se vio afectado.</li>
+    </ul>
+  </article>
+
+  <article class="entrada">
+    <div class="cuando">21 sep 2026 · revisión inicial</div>
+    <h3>Se comprobó que la página estaba en línea</h3>
+    <ul>
+      <li>Hospedaje: Netlify (plan gratuito), con publicación automática desde GitHub. Dominio comprado en Hostinger.</li>
+      <li>Las tres direcciones respondían bien, y lo publicado coincidía con lo guardado en la carpeta (último cambio real: 6 de septiembre de 2026, menú móvil).</li>
+    </ul>
+  </article>
+
+  <footer>Bitácora viva · última actualización: 21 de septiembre de 2026</footer>
+</div>
+</body>
+</html>

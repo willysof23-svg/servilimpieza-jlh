@@ -153,6 +153,22 @@ través de un backend hecho con Google Apps Script.
   `admin.html` como en `js/content-loader.js` — el sistema ya está
   conectado y funcionando, no hace falta configurarlo de nuevo.
 
+## Estado de publicación y bitácora (actualizar siempre)
+
+- **`BITACORA_JLH.html`** (raíz del proyecto) es el registro vivo de lo que se hace y del estado actual del
+  sitio, escrito para Willy. **Al terminar cualquier acción relevante, agregar una entrada arriba del
+  "Historial" y actualizar el cuadro "Estado actual".** No crear otra bitácora en otro lado.
+- **Desde el 2026-09-21 el sitio está en MODO MANTENIMIENTO (temporal, decisión de Willy).** Lo activa el
+  archivo `netlify.toml`, que redirige `/` e `/index.html` a `mantenimiento.html` (aviso sin WhatsApp ni
+  número de contacto, a pedido de Willy). `index.html` no se modificó. `admin.html` sigue funcionando.
+  **Para volver a la normalidad: borrar `netlify.toml` y hacer push** (Netlify publica solo en 1-2 min).
+- Hospedaje real: Netlify (`servilimpieza-jlh.netlify.app` + dominio `servilimpiezajlh.com`), publica solo
+  desde GitHub (rama `main`). Si un cambio no aparece en pocos minutos, reenviar la publicación (commit
+  vacío + push); ya pasó una vez.
+- **GitHub Pages estaba activo como segunda copia pública del sitio** (rama `main`, carpeta `/`, HTTPS,
+  sin dominio propio) y se **apagó el 2026-09-21** con autorización de Willy porque no obedece al aviso.
+  No reactivarlo sin avisarle; pasos para reactivarlo en la bitácora.
+
 ## Para probar el sitio localmente
 
 Abrir `index.html` con doble clic basta (usa `fetch` a una URL https
