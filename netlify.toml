@@ -1,0 +1,24 @@
+# MODO MANTENIMIENTO — Servi Limpieza JLH
+#
+# Qué hace: mientras este archivo exista, Netlify muestra "mantenimiento.html" a cualquier
+#           visitante que entre a la página principal ("/" o "/index.html").
+#           index.html NO fue modificado; sigue intacto en el repositorio.
+# Qué NO afecta: admin.html (panel de administración) y sus datos siguen funcionando normal.
+# Cómo volver a poner el sitio en línea: BORRAR este archivo (netlify.toml) y subir el cambio
+#           a GitHub. Netlify vuelve a publicar la página normal en 1-2 minutos.
+# Quién lo lee: Netlify, automáticamente, en cada publicación.
+#
+# "force = true" hace que la regla gane incluso existiendo un index.html real.
+# "status = 200" muestra el aviso sin cambiar la dirección que ve el visitante.
+
+[[redirects]]
+  from = "/"
+  to = "/mantenimiento.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/index.html"
+  to = "/mantenimiento.html"
+  status = 200
+  force = true
